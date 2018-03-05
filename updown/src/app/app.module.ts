@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { LogoComponent } from './components/logo/logo.component';
@@ -9,6 +9,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [
@@ -20,9 +21,10 @@ import { RegisterComponent } from './components/register/register.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

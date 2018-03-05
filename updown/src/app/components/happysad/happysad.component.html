@@ -1,9 +1,11 @@
 <h1> How are you feeling today?</h1>
 <div class = "left">
-  <img src = "assets/Mint-W.png" alt="happy face"><br>
+  <img src = "assets/Mint-W.png" (click) = "happy()" alt="happy face"><br>
   happy
 </div>
 <div class = "right">
-  <img src = "assets/Pink-W.png" alt="sad face"><br>
+  <img src = "assets/Pink-W.png" (click) = "sad()" alt="sad face"><br>
   sad
 </div>
+
+{{this.feeling}} <button (click) = "submit()">save</button>
