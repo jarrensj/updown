@@ -14,4 +14,9 @@ export class DataService {
       .map(res => res.json());
   }
 
+  getProfile(username){
+    return this.http.get('http://localhost:3000/user/'+username)
+      .map(res => res.json());
+  }
+
 }
