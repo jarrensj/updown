@@ -1,4 +1,6 @@
-<p>
-  profile works!
-</p>
 Hi {{firstName}}!
+<div *ngFor = "let w of log">
+  {{w.feeling}}
+  {{w.dateTime}}
+  <br>
+</div>
