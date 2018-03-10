@@ -19,4 +19,11 @@ export class DataService {
       .map(res => res.json());
   }
 
+  register(account){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/register', JSON.stringify(account), {headers: this.headers})
+      .map(res => res.json());
+  }
+
 }

@@ -1,3 +1,28 @@
 <p>
-  register works!
+  register!
 </p>
+
+<form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
+  Email:
+  <input
+    type = "email"
+    [(ngModel)] = "email"
+    name = "email"
+  >
+  <br>
+  username:
+  <input
+    type = "text"
+    [(ngModel)] = "username"
+    name = "username"
+  >
+  <br>
+  password:
+  <input
+    type = "password"
+    [(ngModel)] = "password"
+    name = "password"
+  >
+  <br>
+  <input type="submit" value="Register">
+</form>
