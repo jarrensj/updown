@@ -45,6 +45,9 @@ app.post("/register", function(req, res){
   var password = req.body.password;
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
+  // check if username is already taken
+
+
   MongoClient.connect(url, function(err, db){
     console.log("Connected successfully to mongodb: Register user. ");
     db.collection("users").insertOne({
@@ -91,6 +94,35 @@ app.get('/user/:username', function (req, res){
     });
     db.close();
     console.log("Database connection is closed: get user " + username)
+  });
+});
+
+app.post('/login', function (req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  var query = {"username": username};
+
+  MongoClient.connect(url, function(err, db){
+    console.log("Connected successfully to mongodb: Login: " + username);
+    db.collection("users").find(query).toArray(function(err, user){
+      if(!user.length) {
+        console.log("user not found");
+        res.send("user not found");
+      }
+      else if (user) {
+        console.log("found user");
+          if(user[0].password == password) {
+            console.log("correct password");
+            res.send(user);
+          }
+          else {
+            console.log("incorrect password");
+          }
+      }
+    });
+    db.close();
+
+    console.log("Database connection is closed: Login: " + username)
   });
 });
 

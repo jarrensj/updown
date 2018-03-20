@@ -26,4 +26,11 @@ export class DataService {
       .map(res => res.json());
   }
 
+  login(account){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/login', JSON.stringify(account), {headers: this.headers})
+      .map(res => res.json());
+  }
+
 }

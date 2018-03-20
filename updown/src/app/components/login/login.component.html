@@ -1,3 +1,22 @@
 <p>
-  login works!
+  login works! <br>
+  {{loggedIn}}
 </p>
+
+<form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
+  username:
+  <input
+    type = "text"
+    [(ngModel)] = "username"
+    name = "username"
+  >
+  <br>
+  password:
+  <input
+    type = "password"
+    [(ngModel)] = "password"
+    name = "password"
+  >
+  <br>
+  <input type="submit" value="Login">
+</form>
