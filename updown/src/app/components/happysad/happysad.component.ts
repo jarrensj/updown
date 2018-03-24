@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DataService } from '../../services/data.service';
+import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-happysad',
   templateUrl: './happysad.component.html',
@@ -8,10 +10,11 @@ import { DataService } from '../../services/data.service';
 })
 export class HappysadComponent implements OnInit {
   feeling:string;
-  username:string = "jarrensj";
-  constructor(private dataService:DataService) { }
+  username:string = "";
+  constructor(private dataService:DataService, public authService: AuthService) { }
 
   ngOnInit() {
+    this.username = this.authService.user;
   }
 
   happy() {

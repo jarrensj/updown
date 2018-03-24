@@ -13,6 +13,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { DataService } from './services/data.service';
 import { ProfileComponent } from './components/profile/profile.component';
 
+import { AuthService } from './services/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     HttpModule,
     FormsModule
   ],
-  providers: [DataService],
+  providers: [DataService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
