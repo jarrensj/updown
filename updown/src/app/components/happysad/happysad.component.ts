@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 export class HappysadComponent implements OnInit {
   feeling:string;
   username:string = "";
+  token:string = "";
   constructor(private dataService:DataService, public authService: AuthService) { }
 
   ngOnInit() {
@@ -34,6 +35,7 @@ export class HappysadComponent implements OnInit {
       feeling: this.feeling,
       dateTime: dateTime
     }
-    this.dataService.save(body).subscribe();
+    let token = this.authService.token;
+    this.dataService.save(body, token).subscribe();
   }
 }

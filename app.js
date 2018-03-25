@@ -8,6 +8,8 @@ var url = configs.url;
 
 var ObjectId = require('mongodb').ObjectID;
 
+const jwt = require('jsonwebtoken');
+
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
@@ -15,8 +17,8 @@ app.set("view engine", "ejs");
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH, OPTIONS");
   next();
 });
 
@@ -39,7 +41,6 @@ app.get("/users", function(req,res){
 
 // register user
 app.post("/register", function(req, res){
-  res.header('Access-Control-Allow-Origin','*');
   var email = req.body.email;
   var username = req.body.username;
   var password = req.body.password;
@@ -64,37 +65,49 @@ app.post("/register", function(req, res){
 });
 
 // post feeling
-app.post("/feeling", function(req, res){
-  res.header('Access-Control-Allow-Origin','*');
+app.post("/feeling", verifyToken, function(req, res){
   var username = req.body.username;
   var feeling = req.body.feeling;
   var dateTime = req.body.dateTime;
   var object = {dateTime: dateTime, feeling: feeling};
-
-  MongoClient.connect(url, function(err, db){
-    console.log("Connected successfully to mongodb: Post feeling. ");
-    db.collection("users").update(
-      {"username": username},
-      {$push: {log: object}}
-    );
-    db.close();
-    console.log("Database connection is closed: Post feeling for " + username)
-    res.send("Posted feeling for " + username);
+  jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if(err) {
+      res.sendStatus(403);
+    } else {
+      MongoClient.connect(url, function(err, db){
+        console.log("Connected successfully to mongodb: Post feeling. ");
+        db.collection("users").update(
+          {"username": username},
+          {$push: {log: object}}
+        );
+        db.close();
+        console.log("Database connection is closed: Post feeling for " + username)
+        res.send("Posted feeling for " + username);
+      });
+    }
   });
 });
 
 // get user by email
-app.get('/user/:username', function (req, res){
+app.get('/user/:username', verifyToken, function (req, res) {
   var username = req.params.username;
   var query = {"username": username};
-  MongoClient.connect(url, function(err, db){
-    console.log("Connected successfully to mongodb: get user " + username);
-    db.collection("users").find(query).toArray(function(err, user){
-      res.send(user);
-    });
-    db.close();
-    console.log("Database connection is closed: get user " + username)
-  });
+  jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if(err) {
+      res.sendStatus(403);
+    } else {
+      // valid token
+      MongoClient.connect(url, function(err, db){
+        console.log("Connected successfully to mongodb: get user " + username);
+        db.collection("users").find(query).toArray(function(err, user){
+          // check if allowed to access that user's information
+          res.send(user);
+        });
+        db.close();
+        console.log("Database connection is closed: get user " + username)
+      });
+    }
+  })
 });
 
 app.post('/login', function (req, res) {
@@ -113,7 +126,9 @@ app.post('/login', function (req, res) {
         console.log("found user");
           if(user[0].password == password) {
             console.log("correct password");
-            res.send(user);
+            jwt.sign({user:user}, 'secretkey', (err, token) => {
+              res.send({user, token});
+            });
           }
           else {
             console.log("incorrect password");
@@ -125,6 +140,26 @@ app.post('/login', function (req, res) {
     console.log("Database connection is closed: Login: " + username)
   });
 });
+
+// format of token
+// Authorization: Bearer <access_token>
+function verifyToken(req, res, next) {
+  // get auth header value
+  const bearerHeader = req.headers['authorization'];
+  if(typeof bearerHeader !== 'undefined') {
+    // split at the space
+    const bearer = bearerHeader.split(' ');
+    // get token from array
+    const bearerToken = bearer[1];
+    // set the token
+    req.token = bearerToken;
+    // next
+    next();
+
+  } else {
+    res.sendStatus(403);
+  }
+}
 
 
 app.listen(3000,function(){

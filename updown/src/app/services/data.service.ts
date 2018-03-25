@@ -7,28 +7,28 @@ export class DataService {
   private headers = new Headers({'Content-Type': 'application/json'})
   constructor(public http:Http) { }
 
-  save(feeling) {
+  save(feeling, token) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/feeling', JSON.stringify(feeling), {headers: this.headers})
+    headers.append('Authorization', "Bearer " + token);
+    return this.http.post('http://localhost:3000/feeling', JSON.stringify(feeling), {headers: headers})
       .map(res => res.json());
   }
 
-  getProfile(username){
-    return this.http.get('http://localhost:3000/user/'+username)
+  getProfile(username, token){
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', "Bearer " + token);
+    return this.http.get('http://localhost:3000/user/'+username, {headers: headers})
       .map(res => res.json());
   }
 
   register(account){
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/register', JSON.stringify(account), {headers: this.headers})
       .map(res => res.json());
   }
 
   login(account){
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
     return this.http.post('http://localhost:3000/login', JSON.stringify(account), {headers: this.headers})
       .map(res => res.json());
   }

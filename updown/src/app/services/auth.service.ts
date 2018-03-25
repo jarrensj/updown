@@ -9,6 +9,7 @@ import 'rxjs/add/operator/delay';
 export class AuthService {
   isLoggedIn = false;
   user:string = "";
+  token:string = "";
 
   // store the URL so we can redirect after logging in
   redirectUrl: string;

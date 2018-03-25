@@ -28,13 +28,17 @@ export class LoginComponent implements OnInit {
       username: value.username,
       password: value.password
     }
-    this.dataService.login(account).subscribe((user) => {
+    this.dataService.login(account).subscribe((res) => {
       // success
-      this.loggedIn = user[0].username;
-      this.authService.user = user[0].username;
-      console.log(this.loggedIn);
+      this.loggedIn = res.user[0].username;
+      this.authService.user = res.user[0].username;
+      this.authService.token = res.token;
+
       this.router.navigate(['/profile']);
-      console.log(this.loggedIn);
+
+
+      console.log("token");
+      console.log(res.token);
     });
 
   }
