@@ -101,7 +101,16 @@ app.get('/user/:username', verifyToken, function (req, res) {
         console.log("Connected successfully to mongodb: get user " + username);
         db.collection("users").find(query).toArray(function(err, user){
           // check if allowed to access that user's information
-          res.send(user);
+          console.log(user[0].token);
+          if(req.token == user[0].token) {
+            // user has permission to access this user
+            console.log("user has permission to access this user");
+            res.send(user);
+          }
+          else {
+            console.log("doesn't have permission");
+            res.send("you don't have permission");
+          }
         });
         db.close();
         console.log("Database connection is closed: get user " + username)
@@ -123,19 +132,33 @@ app.post('/login', function (req, res) {
         res.send("user not found");
       }
       else if (user) {
-        console.log("found user");
-          if(user[0].password == password) {
-            console.log("correct password");
-            jwt.sign({user:user}, 'secretkey', (err, token) => {
-              res.send({user, token});
+        // found user
+        if(user[0].password == password) {
+          // correct password
+          console.log("correct password");
+          // sign token
+          jwt.sign({user:user}, 'secretkey', (err, token) => {
+            // set that token to be associated with accessing only that user's data
+            db.collection("users").update(query, {$set: {token: token}}, function(err, result) {
+              if(err) {
+                console.log(err);
+                console.log("error updating user token");
+              }
+              else {
+                console.log("updated user token");
+              }
             });
-          }
-          else {
-            console.log("incorrect password");
-          }
+            res.send({user, token});
+            db.close();
+          });
+
+        }
+        else {
+          // incorrect password
+          console.log("incorrect password");
+        }
       }
     });
-    db.close();
 
     console.log("Database connection is closed: Login: " + username)
   });
