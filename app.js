@@ -49,8 +49,9 @@ app.post("/register", function(req, res){
   // check if username is already taken
 
 
-  MongoClient.connect(url, function(err, db){
+  MongoClient.connect(url, function(err, database){
     console.log("Connected successfully to mongodb: Register user. ");
+    var db = database.db("feelings");
     db.collection("users").insertOne({
       email: email,
       username: username,
@@ -58,7 +59,7 @@ app.post("/register", function(req, res){
       firstName: firstName,
       lastName: lastName
     });
-    db.close();
+    database.close();
     console.log("Database connection is closed: Register User. ")
     res.send(username + "has been registered!")
   });
@@ -70,23 +71,46 @@ app.post("/feeling", verifyToken, function(req, res){
   var feeling = req.body.feeling;
   var dateTime = req.body.dateTime;
   var object = {dateTime: dateTime, feeling: feeling};
+  var query = {"username": username};
+
   jwt.verify(req.token, 'secretkey', (err, authData) => {
     if(err) {
       res.sendStatus(403);
     } else {
-      MongoClient.connect(url, function(err, db){
+      MongoClient.connect(url, function(err, database){
+        var db = database.db("feelings");
         console.log("Connected successfully to mongodb: Post feeling. ");
-        db.collection("users").update(
-          {"username": username},
-          {$push: {log: object}}
-        );
-        db.close();
-        console.log("Database connection is closed: Post feeling for " + username)
-        res.send("Posted feeling for " + username);
+        // check if allowed to access that user's information
+        db.collection("users").find(query).toArray(function(err, user){
+          console.log(user[0].token);
+          if(req.token == user[0].token) {
+            // user has permission to access this user
+            console.log("user has permission to access this user");
+            observe(username, object);
+          }
+          else {
+            console.log("doesn't have permission");
+          }
+        });
+        database.close();
+        console.log("Database connection is closed: Check if permission for " + username);
       });
     }
   });
 });
+
+// save feeling
+function observe(username, object) {
+  MongoClient.connect(url, function(err, database) {
+    var db = database.db("feelings");
+    db.collection("users").update(
+      {"username":username},
+      {$push: {log: object}}
+    );
+    console.log("posted observance");
+    database.close();
+  });
+}
 
 // get user by email
 app.get('/user/:username', verifyToken, function (req, res) {
@@ -97,7 +121,8 @@ app.get('/user/:username', verifyToken, function (req, res) {
       res.sendStatus(403);
     } else {
       // valid token
-      MongoClient.connect(url, function(err, db){
+      MongoClient.connect(url, function(err, database){
+        var db = database.db("feelings");
         console.log("Connected successfully to mongodb: get user " + username);
         db.collection("users").find(query).toArray(function(err, user){
           // check if allowed to access that user's information
@@ -112,7 +137,7 @@ app.get('/user/:username', verifyToken, function (req, res) {
             res.send("you don't have permission");
           }
         });
-        db.close();
+        database.close();
         console.log("Database connection is closed: get user " + username)
       });
     }
@@ -124,7 +149,8 @@ app.post('/login', function (req, res) {
   var password = req.body.password;
   var query = {"username": username};
 
-  MongoClient.connect(url, function(err, db){
+  MongoClient.connect(url, function(err, database){
+    var db = database.db("feelings");
     console.log("Connected successfully to mongodb: Login: " + username);
     db.collection("users").find(query).toArray(function(err, user){
       if(!user.length) {
@@ -149,7 +175,7 @@ app.post('/login', function (req, res) {
               }
             });
             res.send({user, token});
-            db.close();
+            database.close();
           });
 
         }
