@@ -1,25 +1,20 @@
-<p>
-  login works! <br>
-  {{loggedIn}}
-  {{status}}
-</p>
 <button routerLink="/register">Register</button>
-
-
+<div>
 <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
-  username:
   <input
     type = "text"
     [(ngModel)] = "username"
     name = "username"
+    placeholder = "username"
   >
   <br>
-  password:
   <input
     type = "password"
     [(ngModel)] = "password"
     name = "password"
+    placeholder = "password"
   >
   <br>
   <input type="submit" value="Login">
 </form>
+</div>
