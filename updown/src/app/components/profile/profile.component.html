@@ -1,7 +1,13 @@
-Hi {{user}}!
-<div *ngFor = "let w of log">
-  {{w.feeling}}
-  {{w.dateTime}}
-  <br>
+<h1>Hi {{user}}!</h1>
+<button routerLink="/feelings">How are you today?</button><br>
+<div class = "container">
+  <div *ngFor = "let w of log">
+    <!--{{w.feeling}} {{w.dateTime}} <br>-->
+    <div *ngIf = "w.feeling == 'happy'">
+      <div class ="happy"></div>
+    </div>
+    <div *ngIf = "w.feeling == 'sad'">
+      <div class ="sad"></div>
+    </div>
+  </div>
 </div>
-<button routerLink="/feelings">feelings</button>

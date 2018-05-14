@@ -1,0 +1,26 @@
+h1 {
+  text-align: center;
+}
+
+.happy {
+  width: 1.5%;
+  height: 1.5%;
+  background: green;
+  padding-bottom:1.5%;
+  float: left;
+  margin: 0.25%;
+}
+
+.sad {
+  width: 1.5%;
+  height: 1.5%;
+  background: blue;
+  padding-bottom:1.5%;
+  float: left;
+  margin: 0.25%;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 90%;
+}
