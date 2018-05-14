@@ -12,7 +12,11 @@ export class LoginComponent implements OnInit {
   loggedIn:string;
   status: boolean;
 
-  constructor(private dataService:DataService, public router: Router, public authService: AuthService) {
+  constructor(
+    private dataService:DataService,
+    public router: Router,
+    public authService: AuthService
+  ) {
     this.setStatus();
   }
 

@@ -30,3 +30,14 @@ div {
     width: 50%;
     margin: auto;
 }
+
+.login-container {
+  background-color: lightblue;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+h1 {
+  text-align: center;
+}

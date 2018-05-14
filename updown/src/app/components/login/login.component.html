@@ -1,20 +1,23 @@
-<button routerLink="/register">Register</button>
-<div>
-<form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
-  <input
-    type = "text"
-    [(ngModel)] = "username"
-    name = "username"
-    placeholder = "username"
-  >
-  <br>
-  <input
-    type = "password"
-    [(ngModel)] = "password"
-    name = "password"
-    placeholder = "password"
-  >
-  <br>
-  <input type="submit" value="Login">
-</form>
+<div class = "login-container">
+  <app-logo></app-logo>
+  <h1>updown</h1>
+  <div>
+  <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <input
+      type = "text"
+      [(ngModel)] = "username"
+      name = "username"
+      placeholder = "username"
+    >
+    <br>
+    <input
+      type = "password"
+      [(ngModel)] = "password"
+      name = "password"
+      placeholder = "password"
+    >
+    <br>
+    <input type="submit" value="Login">
+  </form>
+  </div>
 </div>
