@@ -46,22 +46,30 @@ app.post("/register", function(req, res){
   var password = req.body.password;
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
-  // check if username is already taken
-
 
   MongoClient.connect(url, function(err, database){
     console.log("Connected successfully to mongodb: Register user. ");
     var db = database.db("feelings");
-    db.collection("users").insertOne({
-      email: email,
-      username: username,
-      password: password,
-      firstName: firstName,
-      lastName: lastName
+    // check if username is already taken
+    var query = {"username": username};
+    db.collection("users").find(query).toArray(function(err, user){
+      if(user.length) {
+        console.log("Username already exists.");
+        res.send("Username already exists.");
+      }
+      else {
+        db.collection("users").insertOne({
+          email: email,
+          username: username,
+          password: password,
+          firstName: firstName,
+          lastName: lastName
+        });
+        database.close();
+        console.log("Database connection is closed: Register User. ")
+        res.send(username + "has been registered!")
+      }
     });
-    database.close();
-    console.log("Database connection is closed: Register User. ")
-    res.send(username + "has been registered!")
   });
 });
 
@@ -157,8 +165,7 @@ app.post('/login', function (req, res) {
         console.log("user not found");
         res.send("user not found");
       }
-      else if (user) {
-        // found user
+      else {
         if(user[0].password == password) {
           // correct password
           console.log("correct password");
