@@ -1,8 +1,8 @@
 <div class = "login-container">
   <app-logo></app-logo>
   <h1>updown</h1>
-  <div>
-  <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)">
+  <h2>Login</h2>
+  <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
     <input
       type = "text"
       [(ngModel)] = "username"
@@ -19,5 +19,4 @@
     <br>
     <input type="submit" value="Login">
   </form>
-  </div>
 </div>
