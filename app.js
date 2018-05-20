@@ -8,12 +8,8 @@ var url = configs.url;
 
 var ObjectId = require('mongodb').ObjectID;
 
-const jwt = require('jsonwebtoken');
-
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-
-app.set("view engine", "ejs");
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -23,10 +19,11 @@ app.use(function(req, res, next) {
 });
 
 app.get("/", function(req, res){
-  res.send("landing");
+  res.send("hi");
 });
 
 // get all users
+/*
 app.get("/users", function(req,res){
   res.header('Access-Control-Allow-Origin','*');
   MongoClient.connect(url, function(err, db){
@@ -38,6 +35,7 @@ app.get("/users", function(req,res){
     console.log("Database connection is closed: Get all users. ")
   });
 });
+*/
 
 // register user
 app.post("/register", function(req, res){
@@ -80,77 +78,60 @@ app.post("/feeling", verifyToken, function(req, res){
   var dateTime = req.body.dateTime;
   var object = {dateTime: dateTime, feeling: feeling};
   var query = {"username": username};
-
-  jwt.verify(req.token, 'secretkey', (err, authData) => {
-    if(err) {
-      res.sendStatus(403);
-    } else {
-      MongoClient.connect(url, function(err, database){
-        var db = database.db("feelings");
-        console.log("Connected successfully to mongodb: Post feeling. ");
-        // check if allowed to access that user's information
-        db.collection("users").find(query).toArray(function(err, user){
-          console.log(user[0].token);
-          if(req.token == user[0].token) {
-            // user has permission to access this user
-            console.log("user has permission to access this user");
-            observe(username, object);
-            res.send({username, object})
-          }
-          else {
-            console.log("doesn't have permission");
-          }
-        });
-        database.close();
-        console.log("Database connection is closed: Check if permission for " + username);
-      });
-    }
+  MongoClient.connect(url, function(err, database){
+    var db = database.db("feelings");
+    console.log("Connected successfully to mongodb: Post feeling. ");
+    // check if allowed to access that user's information
+    db.collection("users").find(query).toArray(function(err, user){
+      if(req.token == user[0].token) {
+        // user has permission to access this user
+        console.log("user has permission to access this user");
+        record(username, object);
+        res.send({username, object})
+      }
+      else {
+        console.log("doesn't have permission");
+      }
+    });
+    database.close();
+    console.log("Database connection is closed: Post feeling for " + username);
   });
 });
 
 // save feeling
-function observe(username, object) {
+function record(username, object) {
   MongoClient.connect(url, function(err, database) {
     var db = database.db("feelings");
     db.collection("users").update(
       {"username":username},
       {$push: {log: object}}
     );
-    console.log("posted observance");
     database.close();
   });
 }
 
-// get user by email
+// get user by username
 app.get('/user/:username', verifyToken, function (req, res) {
   var username = req.params.username;
   var query = {"username": username};
-  jwt.verify(req.token, 'secretkey', (err, authData) => {
-    if(err) {
-      res.sendStatus(403);
-    } else {
-      // valid token
-      MongoClient.connect(url, function(err, database){
-        var db = database.db("feelings");
-        console.log("Connected successfully to mongodb: get user " + username);
-        db.collection("users").find(query).toArray(function(err, user){
-          // check if allowed to access that user's information
-          console.log(user[0].token);
-          if(req.token == user[0].token) {
-            // user has permission to access this user
-            console.log("user has permission to access this user");
-            res.send(user);
-          }
-          else {
-            console.log("doesn't have permission");
-            res.send("you don't have permission");
-          }
-        });
-        database.close();
-        console.log("Database connection is closed: get user " + username)
-      });
-    }
-  })
+  MongoClient.connect(url, function(err, database){
+    var db = database.db("feelings");
+    console.log("Connected successfully to mongodb: get user " + username);
+    db.collection("users").find(query).toArray(function(err, user){
+      // check if allowed to access that user's information
+      if(req.token == user[0].token) {
+        // user has permission to access this user
+        console.log("user has permission to access this user");
+        res.send(user);
+      }
+      else {
+        console.log("doesn't have permission");
+        res.send("you don't have permission");
+      }
+    });
+    database.close();
+    console.log("Database connection is closed: get user " + username)
+  });
 });
 
 app.post('/login', function (req, res) {
@@ -170,22 +151,20 @@ app.post('/login', function (req, res) {
         if(user[0].password == password) {
           // correct password
           console.log("correct password");
-          // sign token
-          jwt.sign({user:user}, 'secretkey', (err, token) => {
-            // set that token to be associated with accessing only that user's data
-            db.collection("users").update(query, {$set: {token: token}}, function(err, result) {
-              if(err) {
-                console.log(err);
-                console.log("error updating user token");
-              }
-              else {
-                console.log("updated user token");
-              }
-            });
-            res.send({user, token});
-            database.close();
+          // generate random number
+          var token = Math.floor(Math.random() * 8192) + 1;
+          // save that random number on the user
+          db.collection("users").update(query, {$set: {token: token}}, function(err, result) {
+            if(err) {
+              console.log(err);
+              console.log("error updating user token");
+            }
+            else {
+              console.log("updated user token");
+            }
           });
-
+          res.send({user, token});
+          database.close();
         }
         else {
           // incorrect password
@@ -193,7 +172,6 @@ app.post('/login', function (req, res) {
         }
       }
     });
-
     console.log("Database connection is closed: Login: " + username)
   });
 });
