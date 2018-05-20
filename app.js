@@ -52,8 +52,8 @@ app.post("/register", function(req, res){
     var query = {"username": username};
     db.collection("users").find(query).toArray(function(err, user){
       if(user.length) {
-        console.log("Username already exists.");
-        res.send("Username already exists.");
+        console.log("Username already exists!");
+        res.send(false);
       }
       else {
         db.collection("users").insertOne({
@@ -64,8 +64,9 @@ app.post("/register", function(req, res){
           lastName: lastName
         });
         database.close();
+        console.log(username + " has been registered!");
+        res.send(true);
         console.log("Database connection is closed: Register User. ")
-        res.send(username + "has been registered!")
       }
     });
   });
