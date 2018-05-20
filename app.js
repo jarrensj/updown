@@ -95,6 +95,7 @@ app.post("/feeling", verifyToken, function(req, res){
             // user has permission to access this user
             console.log("user has permission to access this user");
             observe(username, object);
+            res.send({username, object})
           }
           else {
             console.log("doesn't have permission");
