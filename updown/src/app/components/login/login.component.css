@@ -34,8 +34,12 @@ input[type=submit]:hover {
 .login-container {
   background-color: lightblue;
   padding: 0;
-  width: 100vw;
-  height: 100vh;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 h1, h2 {
