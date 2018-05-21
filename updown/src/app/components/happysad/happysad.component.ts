@@ -24,12 +24,10 @@ export class HappysadComponent implements OnInit {
   }
 
   happy() {
-    console.log("happy");
     this.feeling = "happy";
   }
 
   sad() {
-    console.log("sad");
     this.feeling = "sad";
   }
 

@@ -1,13 +1,14 @@
-{{username}}
-<h1> How are you feeling today? {{this.username}}</h1>
+<app-logo></app-logo>
+<h1>updown</h1>
+<h1>How are you feeling today?</h1>
 <div class = "left">
   <img src = "assets/Mint-W.png" (click) = "happy()" alt="happy face"><br>
-  happy
+  <div [ngClass] = "{'selected' : feeling === 'happy'}">happy</div>
 </div>
 <div class = "right">
   <img src = "assets/Pink-W.png" (click) = "sad()" alt="sad face"><br>
-  sad
+  <div [ngClass] = "{'selected' : feeling === 'sad'}">sad</div>
 </div>
 
-{{this.feeling}} <button (click) = "submit()">save</button>
+<button (click) = "submit()">save</button>
 <button routerLink="/profile">profile</button>
