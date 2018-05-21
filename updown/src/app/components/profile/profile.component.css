@@ -22,5 +22,13 @@ h1 {
 
 .container {
   margin: 0 auto;
-  max-width: 90%;
+  max-width: 100%;
+}
+
+.happy:hover + .hover, .sad:hover + .hover {
+  display:block;
+}
+
+.hover {
+  display:none;
 }
