@@ -177,6 +177,61 @@ app.post('/login', function (req, res) {
   });
 });
 
+// current feeling of the day
+app.get('/:username/today', verifyToken, function (req, res) {
+  var username = req.params.username;
+  var query = {"username": username};
+  MongoClient.connect(url, function(err, database){
+    var db = database.db("feelings");
+    console.log("Connected successfully to mongodb: get user " + username);
+    db.collection("users").find(query).toArray(function(err, user){
+      // check if allowed to access that user's information
+      if(req.token == user[0].token) {
+        // user has permission to access this user
+        console.log("user has permission to access this user");
+        res.send(feelingToday(user));
+      }
+      else {
+        console.log("doesn't have permission");
+        res.send("you don't have permission");
+      }
+    });
+    database.close();
+    console.log("Database connection is closed: get user " + username)
+  });
+});
+
+function feelingToday(user){
+  // get the latest feeling
+  var logLength = user[0].log.length;
+  var feeling = user[0].log[logLength-1];
+
+  // check if that feeling is today
+  //console.log(feeling);
+  let today = new Date();
+  //console.log("today's date");
+  //console.log(today);
+  //console.log(typeof today);
+  //console.log("feeling");
+  //console.log(feeling.dateTime);
+  //console.log(typeof feeling.dateTime);
+
+  var test = new Date(feeling.dateTime);
+  //console.log("test");
+  //console.log(test);
+  //console.log(typeof test);
+
+  if(test.getMonth() === today.getMonth() && test.getDate() === today.getDate() && test.getFullYear() === today.getFullYear()) {
+    console.log("same day");
+    return feeling;
+  } else {
+    console.log("not the same day");
+    return false;
+  }
+
+  // return feeling;
+}
+
 // format of token
 // Authorization: Bearer <access_token>
 function verifyToken(req, res, next) {
