@@ -1,14 +1,16 @@
-<app-logo></app-logo>
-<h1>updown</h1>
-<h1>How are you feeling today?</h1>
-<div class = "left">
-  <img src = "assets/Mint-W.png" (click) = "happy()" alt="happy face"><br>
-  <div [ngClass] = "{'selected' : feeling === 'happy'}">happy</div>
-</div>
-<div class = "right">
-  <img src = "assets/Pink-W.png" (click) = "sad()" alt="sad face"><br>
-  <div [ngClass] = "{'selected' : feeling === 'sad'}">sad</div>
-</div>
+<div class = "feelings-container">
+  <app-logo></app-logo>
+  <h1>updown</h1>
+  <h1>How are you feeling? </h1>
+  <div class = "left">
+    <img src = "assets/Mint-W.png" (click) = "happy()" alt="happy face"><br>
+    <div [ngClass] = "{'selected' : feeling === 'happy'}">up</div>
+  </div>
+  <div class = "right">
+    <img src = "assets/Pink-W.png" (click) = "sad()" alt="sad face"><br>
+    <div [ngClass] = "{'selected' : feeling === 'sad'}">down</div>
+  </div>
 
-<button (click) = "submit()">save</button>
-<button routerLink="/profile">profile</button>
+  <button (click) = "submit()">save</button>
+  <button routerLink="/profile">profile</button>
+</div>

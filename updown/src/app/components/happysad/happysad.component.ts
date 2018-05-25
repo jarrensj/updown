@@ -13,6 +13,8 @@ export class HappysadComponent implements OnInit {
   feeling:string;
   username:string = "";
   token:string = "";
+  already:boolean; // if they already registered a feeling today
+
   constructor(
     private dataService:DataService,
     public authService: AuthService,
@@ -21,6 +23,7 @@ export class HappysadComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.authService.user;
+    this.checkToday();
   }
 
   happy() {
@@ -42,6 +45,18 @@ export class HappysadComponent implements OnInit {
     this.dataService.save(body, token).subscribe((res) => {
       // success
       this.router.navigate(['/profile']);
+    });
+  }
+
+  // check if registered up or down already today
+  checkToday() {
+    this.dataService.today(this.username, this.authService.token).subscribe((res) => {
+      if(res == false) {
+        this.already = false;
+      } else {
+        this.already = true;
+        this.feeling = res.feeling;
+      }
     });
   }
 }

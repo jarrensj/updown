@@ -33,4 +33,12 @@ export class DataService {
       .map(res => res.json());
   }
 
+  today(username, token) {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', "Bearer " + token);
+    return this.http.get('http://localhost:3000/'+username+'/today', {headers: headers})
+      .map(res => res.json());
+  }
+
 }
