@@ -230,7 +230,7 @@ app.put('/feeling', verifyToken, function (req, res) {
     var db = database.db("feelings");
     console.log("Connected successfully to mongodb: PUT user log:" + username);
     db.collection("users").update(query,{$set:{"log.$.feeling":feeling}}, function(err, user){
-      res.send("updated!");
+      res.send(true);
     });
     database.close();
     console.log("Database connection is closed: PUT user log: " + username)

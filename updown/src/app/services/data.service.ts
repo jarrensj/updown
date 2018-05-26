@@ -15,6 +15,14 @@ export class DataService {
       .map(res => res.json());
   }
 
+  update(feeling, token) {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', "Bearer " + token);
+    return this.http.put('http://localhost:3000/feeling', JSON.stringify(feeling), {headers: headers})
+      .map(res => res.json());
+  }
+  
   getProfile(username, token){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
