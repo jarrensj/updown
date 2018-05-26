@@ -48,11 +48,11 @@ app.post("/register", function(req, res){
   MongoClient.connect(url, function(err, database){
     console.log("Connected successfully to mongodb: Register user. ");
     var db = database.db("feelings");
-    // check if username is already taken
     var query = {"username": username};
     db.collection("users").find(query).toArray(function(err, user){
       if(user.length) {
-        console.log("Username already exists!");
+        // check if username is taken
+        console.log("Username is taken!");
         res.send(false);
       }
       else {
@@ -205,32 +205,37 @@ function feelingToday(user){
   // get the latest feeling
   var logLength = user[0].log.length;
   var feeling = user[0].log[logLength-1];
-
   // check if that feeling is today
-  //console.log(feeling);
   let today = new Date();
-  //console.log("today's date");
-  //console.log(today);
-  //console.log(typeof today);
-  //console.log("feeling");
-  //console.log(feeling.dateTime);
-  //console.log(typeof feeling.dateTime);
-
   var test = new Date(feeling.dateTime);
-  //console.log("test");
-  //console.log(test);
-  //console.log(typeof test);
-
   if(test.getMonth() === today.getMonth() && test.getDate() === today.getDate() && test.getFullYear() === today.getFullYear()) {
-    console.log("same day");
     return feeling;
   } else {
-    console.log("not the same day");
     return false;
   }
-
-  // return feeling;
 }
+
+// update the user's feeling
+app.put('/feeling', verifyToken, function (req, res) {
+  var username = req.body.username;
+  var feeling = req.body.feeling;
+  var dateTime = req.body.dateTime;
+  var numToken = Number(req.token);
+  var query = {
+    "username": username,
+    "log.dateTime": req.body.dateTime,
+    "token": numToken
+  }
+  MongoClient.connect(url, function(err, database){
+    var db = database.db("feelings");
+    console.log("Connected successfully to mongodb: PUT user log:" + username);
+    db.collection("users").update(query,{$set:{"log.$.feeling":feeling}}, function(err, user){
+      res.send("updated!");
+    });
+    database.close();
+    console.log("Database connection is closed: PUT user log: " + username)
+  });
+});
 
 // format of token
 // Authorization: Bearer <access_token>
@@ -246,7 +251,6 @@ function verifyToken(req, res, next) {
     req.token = bearerToken;
     // next
     next();
-
   } else {
     res.sendStatus(403);
   }
