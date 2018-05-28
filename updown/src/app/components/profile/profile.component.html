@@ -1,12 +1,14 @@
-<h1>{{user}}'s profile</h1>
-<button routerLink="/feelings">/feelings</button><br>
-<div class = "container">
-  <div *ngFor = "let w of log.reverse()">
-    <div *ngIf = "w.feeling == 'happy'">
-      <div class ="happy"></div><div class = "hover">{{w.dateTime | date:'short'}}</div>
-    </div>
-    <div *ngIf = "w.feeling == 'sad'">
-      <div class ="sad"></div><div class = "hover">{{w.dateTime| date:'short'}}</div>
+<div class = "profile-container">
+  <h1>{{user}}'s profile</h1>
+  <button routerLink="/feelings">/feelings</button><br>
+  <div class = "container">
+    <div *ngFor = "let w of log.reverse()">
+      <div *ngIf = "w.feeling == 'happy'">
+        <div class ="happy"></div><div class = "hover">{{w.dateTime | date:'short'}}</div>
+      </div>
+      <div *ngIf = "w.feeling == 'sad'">
+        <div class ="sad"></div><div class = "hover">{{w.dateTime| date:'short'}}</div>
+      </div>
     </div>
   </div>
 </div>

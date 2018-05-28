@@ -14,6 +14,7 @@ import { DataService } from './services/data.service';
 import { ProfileComponent } from './components/profile/profile.component';
 
 import { AuthService } from './services/auth.service';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthService } from './services/auth.service';
     HappysadComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
