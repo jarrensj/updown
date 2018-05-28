@@ -202,6 +202,10 @@ app.get('/:username/today', verifyToken, function (req, res) {
 });
 
 function feelingToday(user){
+  // if empty log
+  if(!user[0].log) {
+    return false;
+  }
   // get the latest feeling
   var logLength = user[0].log.length;
   var feeling = user[0].log[logLength-1];
