@@ -58,12 +58,15 @@ export class ProfileComponent implements OnInit {
     }
     // make an array of all the dates in the last eight months
     // last eight months
+    var temp_month = [];
     for (var i = 0; i < 8; ++i) {
       // go through the amount of days in each of those months
       for (var j = days_in_month[last8months[i]]; j > 1; --j) {
         temp = (last8months[i] + 1)+ '/' + j + '/' + theYears[i];
-        this.dates.push(new Date(temp));
+        temp_month.push(new Date(temp));
       }
+      this.dates.push(temp_month);
+      temp_month = [];
     }
     console.log(this.dates);
   }

@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
     this.status = this.authService.isLoggedIn;
   }
   onSubmit({value, valid}:{value:any, valid:boolean}){
-    console.log(value);
     let account = {
       username: value.username,
       password: value.password
