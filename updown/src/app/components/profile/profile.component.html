@@ -12,15 +12,10 @@
     </div>
   </div>
   <br><br>
-  <div class = "container">
-    <div *ngFor = "let w of dates[0]">
+  <div *ngFor = "let m of dates" class = "month">
+    <div *ngFor = "let w of m">
       {{w}}
     </div>
-  </div>
-  <br>
-  <div class = "container">
-    <div *ngFor = "let w of dates[1]">
-      {{w}}
-    </div>
+    <br>
   </div>
 </div>
