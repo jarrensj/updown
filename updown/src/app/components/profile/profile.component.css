@@ -20,12 +20,21 @@ h1 {
   margin: 0.25%;
 }
 
+.empty {
+  width: 1.5%;
+  height: 1.5%;
+  background: grey;
+  padding-bottom:1.5%;
+  float: left;
+  margin: 0.25%;
+}
+
 .container {
   margin: 0 auto;
   max-width: 100%;
 }
 
-.happy:hover + .hover, .sad:hover + .hover {
+.happy:hover + .hover, .sad:hover + .hover, .empty:hover + .hover {
   display:block;
 }
 

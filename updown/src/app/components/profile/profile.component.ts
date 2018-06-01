@@ -22,10 +22,13 @@ export class ProfileComponent implements OnInit {
 
     this.dataService.getProfile(this.user, token).subscribe((user)=> {
       this.firstName = user[0].firstName;
-      this.log = user[0].log;
+      this.log = user[0].log.reverse();
+
+      this.dates = [];
+      this.calendar();
+      this.populate();
     });
-    this.dates = [];
-    this.calendar();
+
   }
 
   calendar() {
@@ -61,14 +64,117 @@ export class ProfileComponent implements OnInit {
     var temp_month = [];
     for (var i = 0; i < 8; ++i) {
       // go through the amount of days in each of those months
-      for (var j = days_in_month[last8months[i]]; j > 1; --j) {
-        temp = (last8months[i] + 1)+ '/' + j + '/' + theYears[i];
-        temp_month.push(new Date(temp));
+      for (var j = days_in_month[last8months[i]]; j > 0; --j) {
+        temp = {
+          date: new Date((last8months[i] + 1)+ '/' + j + '/' + theYears[i]),
+          feeling: "empty"
+        }
+        temp_month.push(temp);
       }
       this.dates.push(temp_month);
       temp_month = [];
     }
     console.log(this.dates);
+  }
+
+  populate() {
+    // put feelings from log into calendar display
+    console.log("log length: " + this.log.length);
+    let temp;
+    var j = 0;
+    var k = 0;
+    var diff;
+    for(let i = 0; i < this.log.length; ++i) {
+      temp = new Date(this.log[i].dateTime);
+      console.log("temp: " + temp);
+      console.log("j: " + j);
+      console.log("k: " + k);
+      console.log(this.dates[j][k].date);
+      console.log(this.sameDay(this.dates[j][k].date, temp));
+      // same day
+      if(this.sameDay(this.dates[j][k].date, temp)){
+        console.log("same day");
+        this.difference(temp, this.dates[j][k].date);
+        // update
+        console.log("update");
+        this.dates[j][k].feeling = this.log[i].feeling;
+        console.log(this.dates[j][k]);
+        // move onto next day
+        if(k < this.dates[j].length - 1) {
+          ++k;
+        }
+        else {
+          // move onto next month
+          if(j < this.dates.length - 1){
+            ++j;
+            k = 0;
+          }
+          // if past last 8 months
+          else {
+            // done
+            break;
+          }
+        }
+      }
+      else {
+        // difference
+        diff = this.difference(this.dates[j][k].date, temp);
+        // if different day but same month, jump to that day
+        if(diff.m == 0 && diff.d > 0 && diff.y == 0) {
+          k = k + diff.d; // jump to that day
+          // update
+          console.log("update");
+          this.dates[j][k].feeling = this.log[i].feeling;
+          console.log(this.dates[j][k]);
+        }
+        // if different month but same year, jump to month and that day
+        else if(diff.m > 0 && diff.y == 0) {
+          if(j + diff.m < this.dates.length) {
+            j = j + diff.m; // jump to that month
+            // jump to that day in that month
+            k = this.dates[j].length - temp.getDate();
+            // update
+            console.log("update");
+            this.dates[j][k].feeling = this.log[i].feeling;
+            console.log(this.dates[j][k]);
+          }
+          else {
+            // done
+            break;
+          }
+        }
+      }
+      console.log("----");
+    }
+  }
+
+
+  // check if same day
+  sameDay(date1, date2){
+    date1 = new Date(date1);
+    date2 = new Date(date2);
+    if(date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate() && date1.getFullYear() === date2.getFullYear()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  difference(date1, date2) {
+    date1 = new Date(date1); // log
+    date2 = new Date(date2); // calendar
+    let m = date1.getMonth() - date2.getMonth();
+    let d = date1.getDate() - date2.getDate();
+    let y = date1.getFullYear() - date2.getFullYear();
+    console.log("m: " + m);
+    console.log("d: " + d);
+    console.log("y: " + y);
+    let diff = {
+      m: m,
+      d: d,
+      y: y
+    }
+    return diff;
   }
 
 }
