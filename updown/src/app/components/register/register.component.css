@@ -45,3 +45,13 @@ input[type=submit]:hover {
 h1, h2 {
   text-align: center;
 }
+
+.already {
+  font-size: small;
+  text-align: right;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}

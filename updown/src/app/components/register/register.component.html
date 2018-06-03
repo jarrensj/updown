@@ -1,8 +1,14 @@
 <div class = "register-container">
   <app-logo></app-logo>
   <h1>updown</h1>
-  <h2>Register</h2>
+  <h2>Sign up</h2>
   <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
+    email address:
+    <input
+      type = "email"
+      [(ngModel)] = "email"
+      name = "email"
+    >
     username:
     <input
       type = "text"
@@ -21,6 +27,7 @@
       type = "password"
     >-->
     <br>
-    <input type="submit" value="Register">
+    <input type="submit" value="Sign up">
+    <a class = "already" routerLink="/login">already have an account?</a>
   </form>
 </div>

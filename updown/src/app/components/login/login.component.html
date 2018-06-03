@@ -1,7 +1,7 @@
 <div class = "login-container">
   <app-logo></app-logo>
   <h1>updown</h1>
-  <h2>Login</h2>
+  <h2>Log in</h2>
   <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
     <input
       type = "text"
@@ -18,5 +18,7 @@
     >
     <br>
     <input type="submit" value="Login">
+    <p class = "forgot"><a routerLink="/forgot">forgot password?〈(゜。゜)</a></p>
+    <p class = "forgot">don't have an account? <a routerLink="/register">sign up ᕕ( ᐛ )ᕗ</a></p>
   </form>
 </div>
