@@ -1,17 +1,21 @@
 <div class = "profile-container">
-  <h1>{{user}}'s profile</h1>
-  <button routerLink="/feelings">/feelings</button><br>
+  <h1>{{user}}'s whiteshoeswednesday record</h1>
+  <button routerLink="/observance">/observance</button><br>
+  <h2>whiteshoeswednesday</h2>
+  <h4>shows wednesdays that you wore white shoes!</h4>
   <div *ngFor = "let m of dates" class = "month">
     {{m[0].date | date: 'MMMM'}}
     <div *ngFor = "let w of m">
-      <div *ngIf = "w.feeling == 'happy'">
-        <div class ="happy"></div><div class = "hover">{{w.date | date:'shortDate'}}</div>
-      </div>
-      <div *ngIf = "w.feeling == 'sad'">
-        <div class ="sad"></div><div class = "hover">{{w.date| date:'shortDate'}}</div>
-      </div>
-      <div *ngIf = "w.feeling == 'empty'">
-        <div class ="empty"></div><div class = "hover">{{w.date| date:'shortDate'}}</div>
+      <div *ngIf = "w.date.getDay() == 3">
+        <div *ngIf = "w.feeling == 'happy'">
+          <div class ="happy"></div><div class = "hover">{{w.date | date:'shortDate'}}</div>
+        </div>
+        <div *ngIf = "w.feeling == 'sad'">
+          <div class ="sad"></div><div class = "hover">{{w.date| date:'shortDate'}}</div>
+        </div>
+        <div *ngIf = "w.feeling == 'empty'">
+          <div class ="empty"></div><div class = "hover">{{w.date| date:'shortDate'}}</div>
+        </div>
       </div>
     </div>
     <br><br> <!-- space between months -->

@@ -53,7 +53,7 @@ app.post("/register", function(req, res){
 
   MongoClient.connect(url, function(err, database){
     console.log("Connected successfully to mongodb: Register user. ");
-    var db = database.db("feelings");
+    var db = database.db("whiteshoeswednesday");
     var query = {"username": username};
     db.collection("users").find(query).toArray(function(err, user){
       if(user.length) {
@@ -86,7 +86,7 @@ app.post("/feeling", verifyToken, function(req, res){
   var object = {dateTime: dateTime, feeling: feeling};
   var query = {"username": username};
   MongoClient.connect(url, function(err, database){
-    var db = database.db("feelings");
+    var db = database.db("whiteshoeswednesday");
     console.log("Connected successfully to mongodb: Post feeling. ");
     // check if allowed to access that user's information
     db.collection("users").find(query).toArray(function(err, user){
@@ -108,7 +108,7 @@ app.post("/feeling", verifyToken, function(req, res){
 // save feeling
 function record(username, object) {
   MongoClient.connect(url, function(err, database) {
-    var db = database.db("feelings");
+    var db = database.db("whiteshoeswednesday");
     db.collection("users").update(
       {"username":username},
       {$push: {log: object}}
@@ -122,7 +122,7 @@ app.get('/user/:username', verifyToken, function (req, res) {
   var username = req.params.username;
   var query = {"username": username};
   MongoClient.connect(url, function(err, database){
-    var db = database.db("feelings");
+    var db = database.db("whiteshoeswednesday");
     console.log("Connected successfully to mongodb: get user " + username);
     db.collection("users").find(query).toArray(function(err, user){
       // check if allowed to access that user's information
@@ -147,7 +147,7 @@ app.post('/login', function (req, res) {
   var query = {"username": username};
 
   MongoClient.connect(url, function(err, database){
-    var db = database.db("feelings");
+    var db = database.db("whiteshoeswednesday");
     console.log("Connected successfully to mongodb: Login: " + username);
     db.collection("users").find(query).toArray(function(err, user){
       if(!user.length) {
@@ -188,7 +188,7 @@ app.get('/:username/today', verifyToken, function (req, res) {
   var username = req.params.username;
   var query = {"username": username};
   MongoClient.connect(url, function(err, database){
-    var db = database.db("feelings");
+    var db = database.db("whiteshoeswednesday");
     console.log("Connected successfully to mongodb: get user " + username);
     db.collection("users").find(query).toArray(function(err, user){
       // check if allowed to access that user's information
@@ -237,7 +237,7 @@ app.put('/feeling', verifyToken, function (req, res) {
     "token": numToken
   }
   MongoClient.connect(url, function(err, database){
-    var db = database.db("feelings");
+    var db = database.db("whiteshoeswednesday");
     console.log("Connected successfully to mongodb: PUT user log:" + username);
     db.collection("users").update(query,{$set:{"log.$.feeling":feeling}}, function(err, user){
       res.send(true);

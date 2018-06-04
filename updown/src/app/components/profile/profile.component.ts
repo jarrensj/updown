@@ -176,5 +176,5 @@ export class ProfileComponent implements OnInit {
     }
     return diff;
   }
-
+  
 }

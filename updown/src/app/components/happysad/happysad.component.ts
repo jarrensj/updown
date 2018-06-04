@@ -25,6 +25,7 @@ export class HappysadComponent implements OnInit {
   ngOnInit() {
     console.log("load");
     this.username = this.authService.user;
+    this.checkIfWednesday();
     this.checkToday();
   }
 
@@ -79,5 +80,17 @@ export class HappysadComponent implements OnInit {
         this.date = res.dateTime;
       }
     });
+  }
+
+  checkIfWednesday() {
+    var date = new Date();
+    if(date.getDay() == 3) {
+      console.log("it's whiteshoeswednesday");
+      return true;
+    }
+    else {
+      console.log("it's not whiteshoeswednesday");
+      return false;
+    }
   }
 }
