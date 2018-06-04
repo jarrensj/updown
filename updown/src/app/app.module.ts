@@ -16,6 +16,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AuthService } from './services/auth.service';
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ShopComponent } from './components/shop/shop.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     RegisterComponent,
     ProfileComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ShopComponent
   ],
   imports: [
     BrowserModule,

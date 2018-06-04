@@ -7,6 +7,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ShopComponent } from './components/shop/shop.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'profile', component: ProfileComponent, canActivate:[AuthGuard]},
+  {path: 'shop', component: ShopComponent},
   {path: '**', component: PageNotFoundComponent}
 
 ];
