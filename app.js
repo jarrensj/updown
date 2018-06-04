@@ -45,6 +45,12 @@ app.post("/register", function(req, res){
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
 
+  console.log("Register");
+  if(!username) {
+    console.log("tried to register without a username");
+    return false;
+  }
+
   MongoClient.connect(url, function(err, database){
     console.log("Connected successfully to mongodb: Register user. ");
     var db = database.db("feelings");

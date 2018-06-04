@@ -1,18 +1,8 @@
 <div class = "profile-container">
   <h1>{{user}}'s profile</h1>
   <button routerLink="/feelings">/feelings</button><br>
-  <div class = "container">
-    <div *ngFor = "let w of log">
-      <div *ngIf = "w.feeling == 'happy'">
-        <div class ="happy"></div><div class = "hover">{{w.dateTime | date:'short'}}</div>
-      </div>
-      <div *ngIf = "w.feeling == 'sad'">
-        <div class ="sad"></div><div class = "hover">{{w.dateTime| date:'short'}}</div>
-      </div>
-    </div>
-  </div>
-  <br><br>
   <div *ngFor = "let m of dates" class = "month">
+    {{m[0].date | date: 'MMMM'}}
     <div *ngFor = "let w of m">
       <div *ngIf = "w.feeling == 'happy'">
         <div class ="happy"></div><div class = "hover">{{w.date | date:'shortDate'}}</div>
@@ -23,8 +13,6 @@
       <div *ngIf = "w.feeling == 'empty'">
         <div class ="empty"></div><div class = "hover">{{w.date| date:'shortDate'}}</div>
       </div>
-      <!-- <div class = "sad"></div><div class = "hover">{{w.date | date:'shortDate'}}</div> -->
-
     </div>
     <br><br> <!-- space between months -->
   </div>

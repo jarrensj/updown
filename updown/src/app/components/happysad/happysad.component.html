@@ -1,7 +1,8 @@
 <div class = "feelings-container">
+  <button routerLink="/profile">go back to profile</button>
   <app-logo></app-logo>
   <h1>updown</h1>
-  <h1>How are you feeling? </h1>
+  <h1>How are you feeling?</h1>
   <div class = "left">
     <img src = "assets/Mint-W.png" (click) = "happy()" alt="happy face"><br>
     <div [ngClass] = "{'selected' : feeling === 'happy'}">up</div>
@@ -11,6 +12,7 @@
     <div [ngClass] = "{'selected' : feeling === 'sad'}">down</div>
   </div>
 
-  <button (click) = "submit()">save</button>
-  <button routerLink="/profile">profile</button>
+  <div class ="save">
+    <button (click) = "submit()">save</button>
+  </div>
 </div>

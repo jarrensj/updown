@@ -18,7 +18,7 @@ img {
 }
 
 .feelings-container {
-  background-color: white;
+  background-color: lightyellow;
   padding: 0;
   margin: 0;
   position: fixed;
@@ -26,4 +26,8 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.save {
+  text-align: center;
 }

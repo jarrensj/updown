@@ -32,7 +32,7 @@ input[type=submit]:hover {
 }
 
 .register-container {
-  background-color: lightyellow;
+  background-color: #FFCCFF;
   padding: 0;
   margin: 0;
   position: fixed;
