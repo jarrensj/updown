@@ -17,6 +17,7 @@ import { AuthService } from './services/auth.service';
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ShopComponent } from './components/shop/shop.component';
+import { PhotosComponent } from './components/photos/photos.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ShopComponent } from './components/shop/shop.component';
     ProfileComponent,
     HomeComponent,
     PageNotFoundComponent,
-    ShopComponent
+    ShopComponent,
+    PhotosComponent
   ],
   imports: [
     BrowserModule,

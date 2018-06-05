@@ -22,7 +22,7 @@ export class DataService {
     return this.http.put('http://localhost:3000/feeling', JSON.stringify(feeling), {headers: headers})
       .map(res => res.json());
   }
-  
+
   getProfile(username, token){
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -47,6 +47,11 @@ export class DataService {
     headers.append('Authorization', "Bearer " + token);
     return this.http.get('http://localhost:3000/'+username+'/today', {headers: headers})
       .map(res => res.json());
+  }
+
+  getPhotos() {
+    return this.http.get('http://localhost:3000/photos')
+  .map(res => res.json());
   }
 
 }
