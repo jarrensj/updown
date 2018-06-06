@@ -8,6 +8,11 @@ var url = configs.url;
 
 var ObjectId = require('mongodb').ObjectID;
 
+var AWS = require('aws-sdk');
+var s3 = new AWS.S3();
+
+var myBucket = 'whiteshoeswednesday';
+
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
@@ -245,6 +250,25 @@ app.put('/feeling', verifyToken, function (req, res) {
     database.close();
     console.log("Database connection is closed: PUT user log: " + username)
   });
+});
+
+app.get('/photos', function(req,res) {
+  var params = {
+    Bucket: myBucket,
+    MaxKeys: 10
+  };
+  s3.listObjects(params, function(err, data) {
+    if(err) console.log(err, err.stack); // an error occured
+    else {
+      console.log(data); // successful response
+      // filenames only
+      var filenames = [];
+      for(let i = 0; i < data.Contents.length; ++i) {
+        filenames.push(data.Contents[i].Key);
+      }
+      res.send(filenames);
+    }
+  })
 });
 
 // format of token

@@ -51,7 +51,7 @@ export class DataService {
 
   getPhotos() {
     return this.http.get('http://localhost:3000/photos')
-  .map(res => res.json());
+      .map(res => res.json());
   }
 
 }

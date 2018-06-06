@@ -7,7 +7,6 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./photos.component.css']
 })
 export class PhotosComponent implements OnInit {
-  bucket:string;
   filenames:string[];
   constructor(
     private dataService:DataService
@@ -15,8 +14,7 @@ export class PhotosComponent implements OnInit {
 
   ngOnInit() {
     this.dataService.getPhotos().subscribe((res) => {
-      this.bucket = res.bucket;
-      this.filenames = res.filenames;
+      this.filenames = res;
     });
   }
 
