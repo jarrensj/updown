@@ -255,7 +255,7 @@ app.put('/feeling', verifyToken, function (req, res) {
 app.get('/photos', function(req,res) {
   var params = {
     Bucket: myBucket,
-    MaxKeys: 10
+    MaxKeys: 100
   };
   s3.listObjects(params, function(err, data) {
     if(err) console.log(err, err.stack); // an error occured
