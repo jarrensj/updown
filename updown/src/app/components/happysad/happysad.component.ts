@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./happysad.component.css']
 })
 export class HappysadComponent implements OnInit {
-  feeling:string;
+  whiteshoes:boolean;
   username:string = "";
   token:string = "";
-  already:boolean; // if they already registered a feeling today
+  already:boolean;
   date:string;
 
   constructor(
@@ -23,18 +23,17 @@ export class HappysadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log("load");
     this.username = this.authService.user;
     this.checkIfWednesday();
     this.checkToday();
   }
 
   happy() {
-    this.feeling = "happy";
+    this.whiteshoes = true;
   }
 
   sad() {
-    this.feeling = "sad";
+    this.whiteshoes = false;
   }
 
   submit(){
@@ -46,7 +45,7 @@ export class HappysadComponent implements OnInit {
       // update feeling of the day
       var body = {
         username: this.username,
-        feeling: this.feeling,
+        whiteshoes: this.whiteshoes,
         dateTime: this.date // dateTime to modify
       }
       this.dataService.update(body, token).subscribe((res) => {
@@ -59,7 +58,7 @@ export class HappysadComponent implements OnInit {
       var dateTime = new Date();
       var body = {
         username: this.username,
-        feeling: this.feeling,
+        whiteshoes: this.whiteshoes,
         dateTime: dateTime.toString()
       }
       this.dataService.save(body, token).subscribe((res) => {
@@ -69,14 +68,14 @@ export class HappysadComponent implements OnInit {
     }
   }
 
-  // check if registered up or down already today
+  // check if registered whiteshoes today
   checkToday() {
     this.dataService.today(this.username, this.authService.token).subscribe((res) => {
       if(res == false) {
         this.already = false;
       } else {
         this.already = true;
-        this.feeling = res.feeling;
+        this.whiteshoes = res.whiteshoes;
         this.date = res.dateTime;
       }
     });

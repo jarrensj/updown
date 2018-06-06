@@ -66,8 +66,8 @@ export class ProfileComponent implements OnInit {
       // go through the amount of days in each of those months
       for (var j = days_in_month[last8months[i]]; j > 0; --j) {
         temp = {
-          date: new Date((last8months[i] + 1)+ '/' + j + '/' + theYears[i]),
-          feeling: "empty"
+          dateTime: new Date((last8months[i] + 1)+ '/' + j + '/' + theYears[i]),
+          whiteshoes: false
         }
         temp_month.push(temp);
       }
@@ -86,18 +86,18 @@ export class ProfileComponent implements OnInit {
     var diff;
     for(let i = 0; i < this.log.length; ++i) {
       temp = new Date(this.log[i].dateTime);
-      console.log("temp: " + temp);
+      console.log("temp(log): " + temp);
       console.log("j: " + j);
       console.log("k: " + k);
-      console.log(this.dates[j][k].date);
-      console.log(this.sameDay(this.dates[j][k].date, temp));
+      console.log("calendar:" + this.dates[j][k].dateTime);
+      console.log("same day: " + this.sameDay(this.dates[j][k].dateTime, temp));
       // same day
-      if(this.sameDay(this.dates[j][k].date, temp)){
+      if(this.sameDay(this.dates[j][k].dateTime, temp)){
         console.log("same day");
-        this.difference(temp, this.dates[j][k].date);
+        this.difference(temp, this.dates[j][k].dateTime);
         // update
         console.log("update");
-        this.dates[j][k].feeling = this.log[i].feeling;
+        this.dates[j][k].whiteshoes = this.log[i].whiteshoes;
         console.log(this.dates[j][k]);
         // move onto next day
         if(k < this.dates[j].length - 1) {
@@ -118,13 +118,13 @@ export class ProfileComponent implements OnInit {
       }
       else {
         // difference
-        diff = this.difference(this.dates[j][k].date, temp);
+        diff = this.difference(this.dates[j][k].dateTime, temp);
         // if different day but same month, jump to that day
         if(diff.m == 0 && diff.d > 0 && diff.y == 0) {
           k = k + diff.d; // jump to that day
           // update
           console.log("update");
-          this.dates[j][k].feeling = this.log[i].feeling;
+          this.dates[j][k].whiteshoes = this.log[i].whiteshoes;
           console.log(this.dates[j][k]);
         }
         // if different month but same year, jump to month and that day
@@ -135,7 +135,7 @@ export class ProfileComponent implements OnInit {
             k = this.dates[j].length - temp.getDate();
             // update
             console.log("update");
-            this.dates[j][k].feeling = this.log[i].feeling;
+            this.dates[j][k].whiteshoes = this.log[i].whiteshoes;
             console.log(this.dates[j][k]);
           }
           else {
@@ -176,5 +176,5 @@ export class ProfileComponent implements OnInit {
     }
     return diff;
   }
-  
+
 }

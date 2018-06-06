@@ -5,11 +5,11 @@
   <h1>are you wearing white shoes?</h1>
   <div class = "left">
     <img src = "assets/Mint-W.png" (click) = "happy()" alt="happy face"><br>
-    <div [ngClass] = "{'selected' : feeling === 'happy'}">of course</div>
+    <div [ngClass] = "{'selected' : whiteshoes === true}">of course</div>
   </div>
   <div class = "right">
     <img src = "assets/Pink-W.png" (click) = "sad()" alt="sad face"><br>
-    <div [ngClass] = "{'selected' : feeling === 'sad'}">i'm sorry!</div>
+    <div [ngClass] = "{'selected' : whiteshoes === false}">i'm sorry!</div>
   </div>
 
   <div class ="save">

@@ -8,16 +8,13 @@
     <div *ngFor = "let m of dates" class = "month">
       {{m[0].date | date: 'MMMM'}}
       <div *ngFor = "let w of m">
-        <div *ngIf = "w.date.getDay() == 3">
-          <div *ngIf = "w.feeling == 'happy'">
-            <div class ="happy"></div><div class = "hover">{{w.date | date:'shortDate'}}</div>
+        <div *ngIf = "w.dateTime.getDay() == 3">
+          <div *ngIf = "w.whiteshoes === true; else elseBlock">
+            <div class ="happy"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
           </div>
-          <div *ngIf = "w.feeling == 'sad'">
-            <div class ="sad"></div><div class = "hover">{{w.date| date:'shortDate'}}</div>
-          </div>
-          <div *ngIf = "w.feeling == 'empty'">
-            <div class ="empty"></div><div class = "hover">{{w.date| date:'shortDate'}}</div>
-          </div>
+          <ng-template #elseBlock>
+            <div class ="sad"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
+          </ng-template>
         </div>
       </div>
       <br><br> <!-- space between months -->

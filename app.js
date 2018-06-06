@@ -83,16 +83,16 @@ app.post("/register", function(req, res){
   });
 });
 
-// post feeling
-app.post("/feeling", verifyToken, function(req, res){
+// post whiteshoes
+app.post("/whiteshoes", verifyToken, function(req, res){
   var username = req.body.username;
-  var feeling = req.body.feeling;
+  var whiteshoes = req.body.whiteshoes;
   var dateTime = req.body.dateTime;
-  var object = {dateTime: dateTime, feeling: feeling};
+  var object = {dateTime: dateTime, whiteshoes: whiteshoes};
   var query = {"username": username};
   MongoClient.connect(url, function(err, database){
     var db = database.db("whiteshoeswednesday");
-    console.log("Connected successfully to mongodb: Post feeling. ");
+    console.log("Connected successfully to mongodb: Post whiteshoes. ");
     // check if allowed to access that user's information
     db.collection("users").find(query).toArray(function(err, user){
       if(req.token == user[0].token) {
@@ -106,11 +106,11 @@ app.post("/feeling", verifyToken, function(req, res){
       }
     });
     database.close();
-    console.log("Database connection is closed: Post feeling for " + username);
+    console.log("Database connection is closed: Post whiteshoes for " + username);
   });
 });
 
-// save feeling
+// push to array
 function record(username, object) {
   MongoClient.connect(url, function(err, database) {
     var db = database.db("whiteshoeswednesday");
@@ -219,21 +219,21 @@ function feelingToday(user){
   }
   // get the latest feeling
   var logLength = user[0].log.length;
-  var feeling = user[0].log[logLength-1];
+  var latest = user[0].log[logLength-1];
   // check if that feeling is today
   let today = new Date();
-  var test = new Date(feeling.dateTime);
+  var test = new Date(latest.dateTime);
   if(test.getMonth() === today.getMonth() && test.getDate() === today.getDate() && test.getFullYear() === today.getFullYear()) {
-    return feeling;
+    return latest;
   } else {
     return false;
   }
 }
 
-// update the user's feeling
-app.put('/feeling', verifyToken, function (req, res) {
+// update the user's log
+app.put('/whiteshoes', verifyToken, function (req, res) {
   var username = req.body.username;
-  var feeling = req.body.feeling;
+  var whiteshoes = req.body.whiteshoes;
   var dateTime = req.body.dateTime;
   var numToken = Number(req.token);
   var query = {
@@ -244,7 +244,7 @@ app.put('/feeling', verifyToken, function (req, res) {
   MongoClient.connect(url, function(err, database){
     var db = database.db("whiteshoeswednesday");
     console.log("Connected successfully to mongodb: PUT user log:" + username);
-    db.collection("users").update(query,{$set:{"log.$.feeling":feeling}}, function(err, user){
+    db.collection("users").update(query,{$set:{"log.$.whiteshoes":whiteshoes}}, function(err, user){
       res.send(true);
     });
     database.close();

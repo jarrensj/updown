@@ -7,19 +7,19 @@ export class DataService {
   private headers = new Headers({'Content-Type': 'application/json'})
   constructor(public http:Http) { }
 
-  save(feeling, token) {
+  save(whiteshoes, token) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', "Bearer " + token);
-    return this.http.post('http://localhost:3000/feeling', JSON.stringify(feeling), {headers: headers})
+    return this.http.post('http://localhost:3000/whiteshoes', JSON.stringify(whiteshoes), {headers: headers})
       .map(res => res.json());
   }
 
-  update(feeling, token) {
+  update(whiteshoes, token) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', "Bearer " + token);
-    return this.http.put('http://localhost:3000/feeling', JSON.stringify(feeling), {headers: headers})
+    return this.http.put('http://localhost:3000/whiteshoes', JSON.stringify(whiteshoes), {headers: headers})
       .map(res => res.json());
   }
 
