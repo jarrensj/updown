@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   firstName:string;
   log:Log[];
   dates:any;
+  showWednesdays:boolean = true;
 
   constructor(private dataService:DataService,  public authService: AuthService) { }
 
@@ -175,6 +176,10 @@ export class ProfileComponent implements OnInit {
       y: y
     }
     return diff;
+  }
+
+  toggleCalendar(){
+    this.showWednesdays = !this.showWednesdays;
   }
 
 }

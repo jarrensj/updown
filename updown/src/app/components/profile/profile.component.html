@@ -4,20 +4,44 @@
   </div>
   <app-logo></app-logo>
   <h1>{{user}}'s whiteshoeswednesday record</h1>
-  <h2>shows wednesdays that you wore white shoes!</h2>
+  <h2>
+    shows
+    <a (click) = "toggleCalendar()">
+      <span *ngIf = "showWednesdays; else elseBlock">wednesdays</span>
+      <ng-template #elseBlock>
+        every day
+      </ng-template>
+    </a>
+    that you wore white shoes!
+  </h2>
   <div class = "observe"><button routerLink="/observance">record</button></div>
   <div class = "wednesday-log">
     <div *ngFor = "let m of dates" class = "month">
       {{m[0].dateTime | date: 'MMMM'}}
       <div *ngFor = "let w of m">
-        <div *ngIf = "w.dateTime.getDay() == 3">
+        <!-- show wednesday only -->
+        <div *ngIf = "showWednesdays === true; else elseBlock">
+          <div *ngIf = "w.dateTime.getDay() == 3">
+            <div *ngIf = "w.whiteshoes === true; else elseBlock">
+              <div class ="happy"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
+            </div>
+            <ng-template #elseBlock>
+              <div class ="sad"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
+            </ng-template>
+          </div>
+        </div>
+        <!-- end show wednesday only -->
+        <!-- show all days -->
+        <ng-template #elseBlock>
           <div *ngIf = "w.whiteshoes === true; else elseBlock">
             <div class ="happy"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
           </div>
           <ng-template #elseBlock>
             <div class ="sad"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
           </ng-template>
-        </div>
+        </ng-template>
+        <!-- end show all days -->
+
       </div>
       <br><br> <!-- space between months -->
     </div>

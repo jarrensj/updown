@@ -65,3 +65,7 @@ h1, h2, h4 {
 .logout {
   text-align: right;
 }
+
+a {
+  color: blue;
+}
