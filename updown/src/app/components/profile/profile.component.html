@@ -1,12 +1,14 @@
 <div class = "profile-container">
+  <div class = "logout">
+    <button routerLink="/logout">logout</button>
+  </div>
   <app-logo></app-logo>
   <h1>{{user}}'s whiteshoeswednesday record</h1>
-  <h2>whiteshoeswednesday</h2>
-  <h4>shows wednesdays that you wore white shoes!</h4>
-  <div class = "observe"><button routerLink="/observance">log</button></div>
+  <h2>shows wednesdays that you wore white shoes!</h2>
+  <div class = "observe"><button routerLink="/observance">record</button></div>
   <div class = "wednesday-log">
     <div *ngFor = "let m of dates" class = "month">
-      {{m[0].date | date: 'MMMM'}}
+      {{m[0].dateTime | date: 'MMMM'}}
       <div *ngFor = "let w of m">
         <div *ngIf = "w.dateTime.getDay() == 3">
           <div *ngIf = "w.whiteshoes === true; else elseBlock">

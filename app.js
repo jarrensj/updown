@@ -27,21 +27,6 @@ app.get("/", function(req, res){
   res.send("hi");
 });
 
-// get all users
-/*
-app.get("/users", function(req,res){
-  res.header('Access-Control-Allow-Origin','*');
-  MongoClient.connect(url, function(err, db){
-    console.log("Connected successfully to mongodb: Get all users. ");
-    db.collection("users").find({}).toArray(function(err, allUsers){
-      res.send(allUsers);
-    });
-    db.close();
-    console.log("Database connection is closed: Get all users. ")
-  });
-});
-*/
-
 // register user
 app.post("/register", function(req, res){
   var email = req.body.email;
@@ -157,7 +142,7 @@ app.post('/login', function (req, res) {
     db.collection("users").find(query).toArray(function(err, user){
       if(!user.length) {
         console.log("user not found");
-        res.send("user not found");
+        res.send(false);
       }
       else {
         if(user[0].password == password) {

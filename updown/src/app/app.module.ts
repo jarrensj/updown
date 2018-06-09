@@ -18,6 +18,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { PhotosComponent } from './components/photos/photos.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { PhotosComponent } from './components/photos/photos.component';
     HomeComponent,
     PageNotFoundComponent,
     ShopComponent,
-    PhotosComponent
+    PhotosComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
