@@ -17,16 +17,20 @@
   <div class = "observe"><button routerLink="/observance">record</button></div>
   <div class = "wednesday-log">
     <div *ngFor = "let m of dates" class = "month">
-      {{m[0].dateTime | date: 'MMMM'}}
+      {{m[0].dateTime | date: 'MMMM yyyy'}}
       <div *ngFor = "let w of m">
         <!-- show wednesday only -->
         <div *ngIf = "showWednesdays === true; else elseBlock">
           <div *ngIf = "w.dateTime.getDay() == 3">
             <div *ngIf = "w.whiteshoes === true; else elseBlock">
-              <div class ="happy"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
+              <div class="tooltip">
+                <img class = "w" src = "assets/white-w.png"><span class="tooltiptext">{{w.dateTime | date:'shortDate'}}</span>
+              </div>
             </div>
             <ng-template #elseBlock>
-              <div class ="sad"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
+              <div class="tooltip">
+                <img class = "w" src = "assets/grey-w.png"><span class="tooltiptext">{{w.dateTime | date:'shortDate'}}</span>
+              </div>
             </ng-template>
           </div>
         </div>
@@ -34,16 +38,19 @@
         <!-- show all days -->
         <ng-template #elseBlock>
           <div *ngIf = "w.whiteshoes === true; else elseBlock">
-            <div class ="happy"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
+            <div class="tooltip">
+              <img class = "w" src = "assets/white-w.png"><span class="tooltiptext">{{w.dateTime | date:'shortDate'}}</span>
+            </div>
           </div>
           <ng-template #elseBlock>
-            <div class ="sad"></div><div class = "hover">{{w.dateTime | date:'shortDate'}}</div>
+            <div class="tooltip">
+              <img class = "w" src = "assets/grey-w.png"><span class="tooltiptext">{{w.dateTime | date:'shortDate'}}</span>
+            </div>
           </ng-template>
         </ng-template>
         <!-- end show all days -->
 
       </div>
-      <br><br> <!-- space between months -->
     </div>
   </div>
 </div>
