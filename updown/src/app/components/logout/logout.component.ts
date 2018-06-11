@@ -15,7 +15,7 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit() {
     this.authService.isLoggedIn = false;
-    status = this.authService.isLoggedIn;
+    this.status = this.authService.isLoggedIn;
 
   }
 

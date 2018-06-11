@@ -54,3 +54,7 @@ h1, h2, h4 {
 a {
   text-decoration: none;
 }
+
+.navbar {
+  text-align: right;
+}

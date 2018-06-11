@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
   loggedIn:string;
   status: boolean;
   message:string;
+  username:string;
+  password:string;
 
   constructor(
     private dataService:DataService,
@@ -43,7 +45,7 @@ export class LoginComponent implements OnInit {
       }
       else {
         // wrong password
-        this.message = "incorrect password"
+        this.message = "incorrect username/password"
       }
     });
 
