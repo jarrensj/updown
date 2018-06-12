@@ -84,11 +84,9 @@ export class HappysadComponent implements OnInit {
   checkIfWednesday() {
     var date = new Date();
     if(date.getDay() == 3) {
-      console.log("it's whiteshoeswednesday");
       return true;
     }
     else {
-      console.log("it's not whiteshoeswednesday");
       return false;
     }
   }

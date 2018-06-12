@@ -11,8 +11,8 @@ import { AuthService } from '../../services/auth.service';
 export class ProfileComponent implements OnInit {
   user:string = "";
   firstName:string;
-  log:Log[];
-  dates:any;
+  log:Log[]; // log of dates with recorded whiteshoes
+  dates:any = []; // calendar (last 8 months)
   showWednesdays:boolean = true;
 
   constructor(private dataService:DataService,  public authService: AuthService) { }
@@ -20,19 +20,22 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.user = this.authService.user;
     let token = this.authService.token;
-
+    this.setupCalendar();
     this.dataService.getProfile(this.user, token).subscribe((user)=> {
       this.firstName = user[0].firstName;
-      this.log = user[0].log.reverse();
-
-      this.dates = [];
-      this.calendar();
+      if(user[0].log) {
+        this.log = user[0].log.reverse();
+      }
+      else {
+        this.log = [];
+      }
       this.populate();
     });
 
   }
 
-  calendar() {
+  // this.dates gets last 8 months of days
+  setupCalendar() {
     var days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     // get date
     var today = new Date();
@@ -75,31 +78,22 @@ export class ProfileComponent implements OnInit {
       this.dates.push(temp_month);
       temp_month = [];
     }
-    console.log(this.dates);
   }
 
+  // transfer feelings from log to calendar (last 8 months)
   populate() {
     // put feelings from log into calendar display
-    console.log("log length: " + this.log.length);
     let temp;
     var j = 0;
     var k = 0;
     var diff;
     for(let i = 0; i < this.log.length; ++i) {
       temp = new Date(this.log[i].dateTime);
-      console.log("temp(log): " + temp);
-      console.log("j: " + j);
-      console.log("k: " + k);
-      console.log("calendar:" + this.dates[j][k].dateTime);
-      console.log("same day: " + this.sameDay(this.dates[j][k].dateTime, temp));
       // same day
       if(this.sameDay(this.dates[j][k].dateTime, temp)){
-        console.log("same day");
         this.difference(temp, this.dates[j][k].dateTime);
         // update
-        console.log("update");
         this.dates[j][k].whiteshoes = this.log[i].whiteshoes;
-        console.log(this.dates[j][k]);
         // move onto next day
         if(k < this.dates[j].length - 1) {
           ++k;
@@ -124,9 +118,7 @@ export class ProfileComponent implements OnInit {
         if(diff.m == 0 && diff.d > 0 && diff.y == 0) {
           k = k + diff.d; // jump to that day
           // update
-          console.log("update");
           this.dates[j][k].whiteshoes = this.log[i].whiteshoes;
-          console.log(this.dates[j][k]);
         }
         // if different month but same year, jump to month and that day
         else if(diff.m > 0 && diff.y == 0) {
@@ -135,9 +127,7 @@ export class ProfileComponent implements OnInit {
             // jump to that day in that month
             k = this.dates[j].length - temp.getDate();
             // update
-            console.log("update");
             this.dates[j][k].whiteshoes = this.log[i].whiteshoes;
-            console.log(this.dates[j][k]);
           }
           else {
             // done
@@ -145,7 +135,6 @@ export class ProfileComponent implements OnInit {
           }
         }
       }
-      console.log("----");
     }
   }
 
@@ -167,9 +156,6 @@ export class ProfileComponent implements OnInit {
     let m = date1.getMonth() - date2.getMonth();
     let d = date1.getDate() - date2.getDate();
     let y = date1.getFullYear() - date2.getFullYear();
-    console.log("m: " + m);
-    console.log("d: " + d);
-    console.log("y: " + y);
     let diff = {
       m: m,
       d: d,
