@@ -1,0 +1,22 @@
+{
+  "name": "whiteshoeswednesday",
+  "version": "1.0.0",
+  "description": "whiteshoeswednesday",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jarrensj/wsw.git"
+  },
+  "author": "Jarren San Jose",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jarrensj/wsw/issues"
+  },
+  "homepage": "https://github.com/jarrensj/wsw#readme"
+}
