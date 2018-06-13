@@ -19,6 +19,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ShopComponent } from './components/shop/shop.component';
 import { PhotosComponent } from './components/photos/photos.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { ForgotComponent } from './components/forgot/forgot.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     PageNotFoundComponent,
     ShopComponent,
     PhotosComponent,
-    LogoutComponent
+    LogoutComponent,
+    ForgotComponent
   ],
   imports: [
     BrowserModule,
