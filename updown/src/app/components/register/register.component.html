@@ -11,26 +11,24 @@
       type = "email"
       [(ngModel)] = "email"
       name = "email"
+      required
     >
     username:
     <input
       type = "text"
       [(ngModel)] = "username"
       name = "username"
+      required
     >
     password:
     <input
       type = "password"
       [(ngModel)] = "password"
       name = "password"
+      required
     >
-    <!--
-    re-enter password:
-    <input
-      type = "password"
-    >-->
     <br>
-    <input type="submit" value="Sign up">
+    <input type="submit" [disabled]="!form.valid" value="Sign up">
     <a class = "already" routerLink="/login">already have an account?</a>
   </form>
 </div>
