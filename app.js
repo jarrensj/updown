@@ -9,6 +9,10 @@ var url = configs.url;
 var ObjectId = require('mongodb').ObjectID;
 
 var AWS = require('aws-sdk');
+AWS.config.update({
+  accessKeyId: configs.aws_access_key_id,
+  secretAccessKey: configs.aws_secret_access_key
+})
 var s3 = new AWS.S3();
 
 var myBucket = 'whiteshoeswednesday';
