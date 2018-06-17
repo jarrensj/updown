@@ -29,7 +29,7 @@ export class DataService {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', "Bearer " + token);
-    return this.http.get(this.apiURL + '/user/'+username, {headers: headers})
+    return this.http.get(this.apiURL + '/user/' + username, {headers: headers})
       .map(res => res.json());
   }
 
@@ -47,7 +47,7 @@ export class DataService {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', "Bearer " + token);
-    return this.http.get(this.apiURL + '/'+username+'/today', {headers: headers})
+    return this.http.get(this.apiURL + '/user/' + username + '/today', {headers: headers})
       .map(res => res.json());
   }
 

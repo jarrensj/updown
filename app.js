@@ -178,7 +178,7 @@ app.post('/login', function (req, res) {
 });
 
 // current feeling of the day
-app.get('/:username/today', verifyToken, function (req, res) {
+app.get('/user/:username/today', verifyToken, function (req, res) {
   var username = req.params.username;
   var query = {"username": username};
   MongoClient.connect(url, function(err, database){
