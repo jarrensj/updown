@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
   onSubmit({value, valid}:{value:any, valid:boolean}){
     let account = {
-      username: value.username,
+      username: value.username.toLowerCase(),
       password: value.password
     }
     this.dataService.login(account).subscribe((res) => {
