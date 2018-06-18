@@ -20,6 +20,7 @@ import { ShopComponent } from './components/shop/shop.component';
 import { PhotosComponent } from './components/photos/photos.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ForgotComponent } from './components/forgot/forgot.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ForgotComponent } from './components/forgot/forgot.component';
     ShopComponent,
     PhotosComponent,
     LogoutComponent,
-    ForgotComponent
+    ForgotComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

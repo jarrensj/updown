@@ -56,4 +56,16 @@ export class DataService {
       .map(res => res.json());
   }
 
+  changePassword(username, password, newPassword, token) {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', "Bearer " + token);
+    var passwords = {
+      password: password,
+      newPassword: newPassword
+    }
+    return this.http.put(this.apiURL + '/user/' + username + '/settings/change-password', JSON.stringify(passwords), {headers:headers})
+      .map(res => res.json());
+  }
+
 }

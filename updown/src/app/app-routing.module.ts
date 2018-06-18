@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ShopComponent } from './components/shop/shop.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ForgotComponent } from './components/forgot/forgot.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'shop', component: ShopComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'forgot', component: ForgotComponent},
+  {path: 'settings', component: SettingsComponent, canActivate:[AuthGuard]},
   {path: '**', component: PageNotFoundComponent}
 
 ];
