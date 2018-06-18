@@ -169,6 +169,7 @@ app.post('/login', function (req, res) {
         }
         else {
           // incorrect password
+          res.send(false);
           console.log("incorrect password");
         }
       }
@@ -258,6 +259,29 @@ app.get('/photos', function(req,res) {
       res.send(filenames);
     }
   })
+});
+
+// update password
+app.put('/user/:username/settings/change-password', verifyToken, function (req, res) {
+  var username = req.params.username;
+  var password = req.body.password;
+  var newPassword = req.body.newPassword;
+  var numToken = Number(req.token);
+  var query = {
+    "username": username,
+    "password": password,
+    "token": numToken
+  }
+  MongoClient.connect(url, function(err, database){
+    var db = database.db("whiteshoeswednesday");
+    console.log("Connected successfully to mongodb: update user password:" + username);
+    // updates password of that query
+    db.collection("users").update(query,{$set:{password:newPassword}}, function(err, user){
+      res.send(true);
+    });
+    database.close();
+    console.log("Database connection is closed: update user password: " + username)
+  });
 });
 
 // format of token
