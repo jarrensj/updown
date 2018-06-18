@@ -21,6 +21,7 @@ import { PhotosComponent } from './components/photos/photos.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ForgotComponent } from './components/forgot/forgot.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { CheckComponent } from './components/check/check.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SettingsComponent } from './components/settings/settings.component';
     PhotosComponent,
     LogoutComponent,
     ForgotComponent,
-    SettingsComponent
+    SettingsComponent,
+    CheckComponent
   ],
   imports: [
     BrowserModule,

@@ -178,23 +178,20 @@ app.post('/login', function (req, res) {
   });
 });
 
-// current feeling of the day
-app.get('/user/:username/today', verifyToken, function (req, res) {
+// current status of the day
+app.get('/user/:username/today', function (req, res) {
   var username = req.params.username;
   var query = {"username": username};
   MongoClient.connect(url, function(err, database){
     var db = database.db("whiteshoeswednesday");
     console.log("Connected successfully to mongodb: get user " + username);
     db.collection("users").find(query).toArray(function(err, user){
-      // check if allowed to access that user's information
-      if(req.token == user[0].token) {
-        // user has permission to access this user
-        console.log("user has permission to access this user");
-        res.send(feelingToday(user));
+      if(!user.length) {
+        console.log("user not found");
+        res.send(false);
       }
       else {
-        console.log("doesn't have permission");
-        res.send("you don't have permission");
+        res.send(feelingToday(user));
       }
     });
     database.close();

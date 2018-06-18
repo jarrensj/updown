@@ -70,7 +70,7 @@ export class HappysadComponent implements OnInit {
 
   // check if registered whiteshoes today
   checkToday() {
-    this.dataService.today(this.username, this.authService.token).subscribe((res) => {
+    this.dataService.today(this.username).subscribe((res) => {
       if(res == false) {
         this.already = false;
       } else {

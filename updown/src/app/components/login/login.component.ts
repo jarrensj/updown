@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   setStatus() {
     this.status = this.authService.isLoggedIn;
   }
+
   onSubmit({value, valid}:{value:any, valid:boolean}){
     let account = {
       username: value.username.toLowerCase(),
@@ -48,6 +49,5 @@ export class LoginComponent implements OnInit {
         this.message = "incorrect username/password"
       }
     });
-
   }
 }

@@ -1,0 +1,13 @@
+<p>
+  check works!
+</p>
+{{username}} is {{whiteshoes}}
+<form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
+  <input
+    type = "text"
+    [(ngModel)] = "username"
+    name = "username"
+    placeholder = "username"
+  >
+  <input type="submit" value="check">
+</form>
