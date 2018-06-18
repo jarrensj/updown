@@ -23,7 +23,7 @@ h1, h2, h4 {
 }
 
 .wednesday-log {
-  width: 50%;
+  width: 80%;
   margin:auto;
 }
 
@@ -62,6 +62,6 @@ a {
 }
 
 .month {
-  display:block;
-  margin-bottom: 70px;
+  display: block;
+  margin-bottom: 8%;
 }
