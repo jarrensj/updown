@@ -1,7 +1,5 @@
-# whiteshoeswednesday
-keep track of your whiteshoeswednesday streak
-
-[whiteshoeswednesday.com](whiteshoeswednesday.com)
+# updown
+keep track of how you are feeling
 
 ## run
 run angular app
@@ -18,11 +16,9 @@ node app.js
  configs.js
 ```javascript
 module.exports = {
-  url: "mongodb://localhost:27017",
-  aws_access_key_id: "YOUR_AWS_ACCESS_KEY_ID",
-  aws_secret_access_key: "YOUR_AWS_SECRET_ACCESS_KEY"
+  url: "mongodb://localhost:27017"
 }
 ```
 
 #### created by:
-[Jarren San Jose](jarrensj.com), [Chloe Ng](chloegng.com)
+[Jarren San Jose](jarrensj.com)

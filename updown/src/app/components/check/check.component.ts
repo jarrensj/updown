@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class CheckComponent implements OnInit {
   username:string;
-  whiteshoes:boolean;
+  feelings:string;
   message:string;
   isLoggedIn:boolean;
 
@@ -25,12 +25,13 @@ export class CheckComponent implements OnInit {
   onSubmit({value, valid}:{value:any, valid:boolean}){
     this.dataService.today(this.username).subscribe((res) => {
       if(res) {
-        this.whiteshoes = res.whiteshoes;
-        this.message = this.username + " is wearing white shoes today!";
+        this.feelings = res.feelings; // happy or sad
+        this.message = this.username + " is " + this.feelings;
       }
       else {
-        this.whiteshoes = false;
-        this.message = this.username + " is not wearing white shoes today!";
+        // they have not recorded yet today
+        this.feelings = null;
+        this.message = this.username + " has not shared yet today";
       }
     });
   }

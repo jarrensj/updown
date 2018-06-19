@@ -13,7 +13,7 @@ export class DataService {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', "Bearer " + token);
-    return this.http.post(this.apiURL + '/whiteshoes', JSON.stringify(whiteshoes), {headers: headers})
+    return this.http.post(this.apiURL + '/feelings', JSON.stringify(whiteshoes), {headers: headers})
       .map(res => res.json());
   }
 
@@ -21,7 +21,7 @@ export class DataService {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', "Bearer " + token);
-    return this.http.put(this.apiURL + '/whiteshoes', JSON.stringify(whiteshoes), {headers: headers})
+    return this.http.put(this.apiURL + '/feelings', JSON.stringify(whiteshoes), {headers: headers})
       .map(res => res.json());
   }
 
@@ -47,11 +47,6 @@ export class DataService {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get(this.apiURL + '/user/' + username + '/today', {headers: headers})
-      .map(res => res.json());
-  }
-
-  getPhotos() {
-    return this.http.get(this.apiURL + '/photos')
       .map(res => res.json());
   }
 
