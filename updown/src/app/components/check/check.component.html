@@ -1,13 +1,22 @@
-<p>
-  check works!
-</p>
-{{username}} is {{whiteshoes}}
-<form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
-  <input
-    type = "text"
-    [(ngModel)] = "username"
-    name = "username"
-    placeholder = "username"
-  >
-  <input type="submit" value="check">
-</form>
+<div class = "check-container">
+  <div class = "navbar">
+    <button *ngIf = "!isLoggedIn" routerLink="/">home</button>
+    <button *ngIf = "!isLoggedIn" routerLink="/login">login</button>
+    <button *ngIf = "isLoggedIn" routerLink="/profile">profile</button>
+    <button *ngIf = "isLoggedIn" routerLink="/logout">logout</button>
+  </div>
+  <app-logo></app-logo>
+  <h1>white shoes today?</h1>
+  <h2>{{message}}</h2>
+  <h3>Search a username and see if they are wearing white shoes</h3>
+
+  <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
+    <input
+      type = "text"
+      [(ngModel)] = "username"
+      name = "username"
+      placeholder = "username"
+    >
+    <input type="submit" value="check">
+  </form>
+</div>
