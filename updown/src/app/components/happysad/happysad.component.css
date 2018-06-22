@@ -4,13 +4,12 @@
   text-align: center;
 }
 
-h1 {
+h1, h3, h5 {
   text-align: center;
 }
 
 img {
-  height: 100px;
-  width: 100px;
+  max-width: 100px;
 }
 
 .selected {
@@ -30,4 +29,8 @@ img {
 
 .save {
   text-align: center;
+}
+
+.logout {
+  text-align: right;
 }

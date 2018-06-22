@@ -1,7 +1,12 @@
 <div class = "login-container">
+  <div class = "navbar">
+    <button routerLink="">home</button>
+    <button routerLink="/register">register</button>
+  </div>
   <app-logo></app-logo>
-  <h1>updown</h1>
+  <h1>whiteshoeswednesday</h1>
   <h2>Log in</h2>
+  <h4>{{message}}</h4>
   <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
     <input
       type = "text"
@@ -9,15 +14,13 @@
       name = "username"
       placeholder = "username"
     >
-    <br>
     <input
       type = "password"
       [(ngModel)] = "password"
       name = "password"
       placeholder = "password"
     >
-    <br>
-    <input type="submit" value="Login">
+    <input type="submit" value="Log in">
     <p class = "forgot"><a routerLink="/forgot">forgot password?〈(゜。゜)</a></p>
     <p class = "forgot">don't have an account? <a routerLink="/register">sign up ᕕ( ᐛ )ᕗ</a></p>
   </form>

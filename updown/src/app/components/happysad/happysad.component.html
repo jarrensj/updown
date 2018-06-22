@@ -1,18 +1,27 @@
 <div class = "feelings-container">
-  <button routerLink="/profile">go back to profile</button>
+  <div class = "logout">
+    <button routerLink="/profile">profile</button>
+    <button routerLink="/logout">logout</button>
+  </div>
   <app-logo></app-logo>
-  <h1>updown</h1>
-  <h1>How are you feeling?</h1>
+  <h1>are you wearing white shoes?</h1>
+  <h3 *ngIf = "already">you've already recorded today! (๑˃̵ᴗ˂̵)و</h3>
+
   <div class = "left">
-    <img src = "assets/Mint-W.png" (click) = "happy()" alt="happy face"><br>
-    <div [ngClass] = "{'selected' : feeling === 'happy'}">up</div>
+    <img src = "assets/white-w.png" (click) = "happy()" alt="happy face"><br>
+    <span [ngClass] = "{'selected' : whiteshoes === true}">of course</span>
   </div>
   <div class = "right">
-    <img src = "assets/Pink-W.png" (click) = "sad()" alt="sad face"><br>
-    <div [ngClass] = "{'selected' : feeling === 'sad'}">down</div>
+    <img src = "assets/grey-w.png" (click) = "sad()" alt="sad face"><br>
+    <span [ngClass] = "{'selected' : whiteshoes === false}">i'm sorry!</span>
   </div>
 
   <div class ="save">
-    <button (click) = "submit()">save</button>
+    <button (click) = "submit()">
+      <span *ngIf = "!already; else elseBlock">save</span>
+      <ng-template #elseBlock>
+        update
+      </ng-template>
+    </button>
   </div>
 </div>

@@ -1,0 +1,61 @@
+input[type=password], input[type=newPassword], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #3FB2FF;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #93B8E2;
+}
+
+.form {
+    border-radius: 5px;
+    background-color: #F4F4F4;
+    padding: 20px;
+    width: 50%;
+    margin: auto;
+}
+
+.register-container {
+  background-color: #FFCCFF;
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+
+.already {
+  font-size: small;
+  text-align: right;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}
+
+.navbar {
+  text-align: right;
+}

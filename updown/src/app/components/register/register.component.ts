@@ -22,8 +22,8 @@ export class RegisterComponent implements OnInit {
 
   onSubmit({value, valid}:{value:any, valid:boolean}){
     let account = {
-      email: value.email,
-      username: value.username,
+      email: value.email.toLowerCase(),
+      username: value.username.toLowerCase(),
       password: value.password
     }
     this.dataService.register(account).subscribe((res) => {

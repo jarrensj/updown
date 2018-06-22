@@ -16,6 +16,12 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AuthService } from './services/auth.service';
 import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ShopComponent } from './components/shop/shop.component';
+import { PhotosComponent } from './components/photos/photos.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { ForgotComponent } from './components/forgot/forgot.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { CheckComponent } from './components/check/check.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +32,13 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     RegisterComponent,
     ProfileComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ShopComponent,
+    PhotosComponent,
+    LogoutComponent,
+    ForgotComponent,
+    SettingsComponent,
+    CheckComponent
   ],
   imports: [
     BrowserModule,

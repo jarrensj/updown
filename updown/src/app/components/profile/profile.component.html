@@ -1,19 +1,58 @@
 <div class = "profile-container">
-  <h1>{{user}}'s profile</h1>
-  <button routerLink="/feelings">/feelings</button><br>
-  <div *ngFor = "let m of dates" class = "month">
-    {{m[0].date | date: 'MMMM'}}
-    <div *ngFor = "let w of m">
-      <div *ngIf = "w.feeling == 'happy'">
-        <div class ="happy"></div><div class = "hover">{{w.date | date:'shortDate'}}</div>
+  <div class = "logout">
+    <button routerLink="/check">check</button>
+    <button routerLink="/settings">settings</button>
+    <button routerLink="/logout">logout</button>
+  </div>
+  <app-logo></app-logo>
+  <h1>{{user}}'s whiteshoeswednesday record</h1>
+  <h2>
+    shows
+    <a (click) = "toggleCalendar()">
+      <span *ngIf = "showWednesdays; else elseBlock">wednesdays</span>
+      <ng-template #elseBlock>
+        every day
+      </ng-template>
+    </a>
+    that you wore white shoes!
+  </h2>
+  <div class = "observe"><button routerLink="/observance">record</button></div>
+  <div class = "wednesday-log">
+    <div *ngFor = "let m of dates" class = "month">
+      {{m[0].dateTime | date: 'MMMM yyyy'}}
+      <div *ngFor = "let w of m">
+        <!-- show wednesday only -->
+        <div *ngIf = "showWednesdays === true; else elseBlock">
+          <div *ngIf = "w.dateTime.getDay() == 3">
+            <div *ngIf = "w.whiteshoes === true; else elseBlock">
+              <div class="tooltip">
+                <img class = "w" src = "assets/white-w.png"><span class="tooltiptext">{{w.dateTime | date:'shortDate'}}</span>
+              </div>
+            </div>
+            <ng-template #elseBlock>
+              <div class="tooltip">
+                <img class = "w" src = "assets/grey-w.png"><span class="tooltiptext">{{w.dateTime | date:'shortDate'}}</span>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <!-- end show wednesday only -->
+        <!-- show all days -->
+        <ng-template #elseBlock>
+          <div *ngIf = "w.whiteshoes === true; else elseBlock">
+            <div class="tooltip">
+              <img class = "w" src = "assets/white-w.png"><span class="tooltiptext">{{w.dateTime | date:'shortDate'}}</span>
+            </div>
+          </div>
+          <ng-template #elseBlock>
+            <div class="tooltip">
+              <img class = "w" src = "assets/grey-w.png"><span class="tooltiptext">{{w.dateTime | date:'shortDate'}}</span>
+            </div>
+          </ng-template>
+        </ng-template>
+        <!-- end show all days -->
       </div>
-      <div *ngIf = "w.feeling == 'sad'">
-        <div class ="sad"></div><div class = "hover">{{w.date| date:'shortDate'}}</div>
-      </div>
-      <div *ngIf = "w.feeling == 'empty'">
-        <div class ="empty"></div><div class = "hover">{{w.date| date:'shortDate'}}</div>
-      </div>
+      <br>
     </div>
-    <br><br> <!-- space between months -->
   </div>
 </div>

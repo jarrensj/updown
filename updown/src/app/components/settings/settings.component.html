@@ -1,0 +1,27 @@
+<div class = "register-container">
+  <div class = "navbar">
+    <button routerLink="/profile">back</button>
+    <button routerLink="/logout">logout</button>
+  </div>
+  <app-logo></app-logo>
+  <h1>whiteshoeswednesday</h1>
+  <h2>Settings</h2>
+  <h3>Change password</h3>
+  <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
+    current password:
+    <input
+      type = "password"
+      [(ngModel)] = "password"
+      name = "password"
+      required
+    >
+    new password:
+    <input
+      type = "password"
+      [(ngModel)] = "newPassword"
+      name = "newPassword"
+      required
+    >
+    <input type="submit" [disabled]="!form.valid" value="change password">
+  </form>
+</div>

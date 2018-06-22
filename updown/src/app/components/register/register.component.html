@@ -1,6 +1,9 @@
 <div class = "register-container">
+  <div class = "navbar">
+    <button routerLink="/login">login</button>
+  </div>
   <app-logo></app-logo>
-  <h1>updown</h1>
+  <h1>whiteshoeswednesday</h1>
   <h2>Sign up</h2>
   <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
     email address:
@@ -8,26 +11,23 @@
       type = "email"
       [(ngModel)] = "email"
       name = "email"
+      required
     >
     username:
     <input
       type = "text"
       [(ngModel)] = "username"
       name = "username"
+      required
     >
     password:
     <input
       type = "password"
       [(ngModel)] = "password"
       name = "password"
+      required
     >
-    <!--
-    re-enter password:
-    <input
-      type = "password"
-    >-->
-    <br>
-    <input type="submit" value="Sign up">
+    <input type="submit" [disabled]="!form.valid" value="Sign up">
     <a class = "already" routerLink="/login">already have an account?</a>
   </form>
 </div>
