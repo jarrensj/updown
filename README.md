@@ -16,7 +16,8 @@ node app.js
  configs.js
 ```javascript
 module.exports = {
-  url: "mongodb://localhost:27017"
+  url: "mongodb://localhost:27017",
+  recaptcha_secret_key: "YOUR_RECAPTCHA_SECRET_KEY"
 }
 ```
 
