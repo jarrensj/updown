@@ -1,11 +1,13 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
+var request = require("request");
 var configs = require('./configs.js');
 
 var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 var url = configs.url;
 
+var recaptcha_secret_key = configs.recaptcha_secret_key;
 var ObjectId = require('mongodb').ObjectID;
 
 var AWS = require('aws-sdk');
@@ -33,43 +35,65 @@ app.get("/", function(req, res){
 
 // register user
 app.post("/register", function(req, res){
-  var email = req.body.email;
-  var username = req.body.username;
-  var password = req.body.password;
-  var firstName = req.body.firstName;
-  var lastName = req.body.lastName;
-
-  console.log("Register");
-  if(!username) {
-    console.log("tried to register without a username");
-    return false;
+  console.log(req.body.captcha);
+  if(
+   req.body.captcha === undefined ||
+   req.body.captcha === '' ||
+   req.body.captcha === null
+  ) {
+    console.log("false");
+    res.send(false); // failed captcha
+    return;
   }
 
-  MongoClient.connect(url, function(err, database){
-    console.log("Connected successfully to mongodb: Register user. ");
-    var db = database.db("whiteshoeswednesday");
-    var query = {"username": username};
-    db.collection("users").find(query).toArray(function(err, user){
-      if(user.length) {
-        // check if username is taken
-        console.log("Username is taken!");
-        res.send(false);
-      }
-      else {
-        db.collection("users").insertOne({
-          email: email,
-          username: username,
-          password: password,
-          firstName: firstName,
-          lastName: lastName
-        });
-        database.close();
-        console.log(username + " has been registered!");
-        res.send(true);
-        console.log("Database connection is closed: Register User. ")
-      }
+  const verifyUrl = 'https://google.com/recaptcha/api/siteverify?secret=' + recaptcha_secret_key + '&response=' +req.body.captcha + '&remoteip=' + req.connection.remoteAddress;  var email = req.body.email;
+
+  request(verifyUrl, (err, response, body) => {
+    body = JSON.parse(body);
+    if(body.success !== undefined && !body.success) {
+      console.log("false");
+      res.json({"success": false, "message": "You failed the capatcha. Please refresh page."});
+      return;
+    }
+
+    // valid captcha
+    var username = req.body.username;
+    var password = req.body.password;
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+
+    console.log("Register");
+    if(!username) {
+      console.log("tried to register without a username");
+      return false;
+    }
+
+    MongoClient.connect(url, function(err, database){
+      console.log("Connected successfully to mongodb: Register user. ");
+      var db = database.db("whiteshoeswednesday");
+      var query = {"username": username};
+      db.collection("users").find(query).toArray(function(err, user){
+        if(user.length) {
+          // check if username is taken
+          console.log("Username is taken!");
+          res.json({"success": false, "message": "username is taken"});
+        }
+        else {
+          db.collection("users").insertOne({
+            email: email,
+            username: username,
+            password: password,
+            firstName: firstName,
+            lastName: lastName
+          });
+          database.close();
+          console.log(username + " has been registered!");
+          res.send(true);
+          console.log("Database connection is closed: Register User. ")
+        }
+      });
     });
-  });
+  })
 });
 
 // post whiteshoes

@@ -19,8 +19,7 @@ node app.js
 ```javascript
 module.exports = {
   url: "mongodb://localhost:27017",
-  aws_access_key_id: "YOUR_AWS_ACCESS_KEY_ID",
-  aws_secret_access_key: "YOUR_AWS_SECRET_ACCESS_KEY"
+  recaptcha_secret_key: "YOUR_RECAPTCHA_SECRET_KEY"
 }
 ```
 

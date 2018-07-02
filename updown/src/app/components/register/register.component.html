@@ -5,6 +5,7 @@
   <app-logo></app-logo>
   <h1>whiteshoeswednesday</h1>
   <h2>Sign up</h2>
+  <h3>{{message}}</h3>
   <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
     email address:
     <input
@@ -27,6 +28,7 @@
       name = "password"
       required
     >
+    <div class="g-recaptcha" data-sitekey="6LcLN2AUAAAAAMapBJYy6fn3-JgHqeRD3CtUlK-E"></div>
     <input type="submit" [disabled]="!form.valid" value="Sign up">
     <a class = "already" routerLink="/login">already have an account?</a>
   </form>
