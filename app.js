@@ -10,14 +10,6 @@ var url = configs.url;
 var recaptcha_secret_key = configs.recaptcha_secret_key;
 var ObjectId = require('mongodb').ObjectID;
 
-var AWS = require('aws-sdk');
-AWS.config.update({
-  accessKeyId: configs.aws_access_key_id,
-  secretAccessKey: configs.aws_secret_access_key
-})
-var s3 = new AWS.S3();
-
-var myBucket = 'whiteshoeswednesday';
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -70,7 +62,7 @@ app.post("/register", function(req, res){
 
     MongoClient.connect(url, function(err, database){
       console.log("Connected successfully to mongodb: Register user. ");
-      var db = database.db("whiteshoeswednesday");
+      var db = database.db("feelings");
       var query = {"username": username};
       db.collection("users").find(query).toArray(function(err, user){
         if(user.length) {
@@ -96,16 +88,16 @@ app.post("/register", function(req, res){
   })
 });
 
-// post whiteshoes
-app.post("/whiteshoes", verifyToken, function(req, res){
+// post feeling
+app.post("/feelings", verifyToken, function(req, res){
   var username = req.body.username;
-  var whiteshoes = req.body.whiteshoes;
+  var feelings = req.body.feelings;
   var dateTime = req.body.dateTime;
-  var object = {dateTime: dateTime, whiteshoes: whiteshoes};
+  var object = {dateTime: dateTime, feelings: feelings};
   var query = {"username": username};
   MongoClient.connect(url, function(err, database){
-    var db = database.db("whiteshoeswednesday");
-    console.log("Connected successfully to mongodb: Post whiteshoes. ");
+    var db = database.db("feelings");
+    console.log("Connected successfully to mongodb: Post feelings. ");
     // check if allowed to access that user's information
     db.collection("users").find(query).toArray(function(err, user){
       if(req.token == user[0].token) {
@@ -119,14 +111,14 @@ app.post("/whiteshoes", verifyToken, function(req, res){
       }
     });
     database.close();
-    console.log("Database connection is closed: Post whiteshoes for " + username);
+    console.log("Database connection is closed: Post feelings for " + username);
   });
 });
 
 // push to array
 function record(username, object) {
   MongoClient.connect(url, function(err, database) {
-    var db = database.db("whiteshoeswednesday");
+    var db = database.db("feelings");
     db.collection("users").update(
       {"username":username},
       {$push: {log: object}}
@@ -140,7 +132,7 @@ app.get('/user/:username', verifyToken, function (req, res) {
   var username = req.params.username;
   var query = {"username": username};
   MongoClient.connect(url, function(err, database){
-    var db = database.db("whiteshoeswednesday");
+    var db = database.db("feelings");
     console.log("Connected successfully to mongodb: get user " + username);
     db.collection("users").find(query).toArray(function(err, user){
       // check if allowed to access that user's information
@@ -165,7 +157,7 @@ app.post('/login', function (req, res) {
   var query = {"username": username};
 
   MongoClient.connect(url, function(err, database){
-    var db = database.db("whiteshoeswednesday");
+    var db = database.db("feelings");
     console.log("Connected successfully to mongodb: Login: " + username);
     db.collection("users").find(query).toArray(function(err, user){
       if(!user.length) {
@@ -207,7 +199,7 @@ app.get('/user/:username/today', function (req, res) {
   var username = req.params.username;
   var query = {"username": username};
   MongoClient.connect(url, function(err, database){
-    var db = database.db("whiteshoeswednesday");
+    var db = database.db("feelings");
     console.log("Connected successfully to mongodb: get user " + username);
     db.collection("users").find(query).toArray(function(err, user){
       if(!user.length) {
@@ -242,9 +234,9 @@ function feelingToday(user){
 }
 
 // update the user's log
-app.put('/whiteshoes', verifyToken, function (req, res) {
+app.put('/feelings', verifyToken, function (req, res) {
   var username = req.body.username;
-  var whiteshoes = req.body.whiteshoes;
+  var feelings = req.body.feelings;
   var dateTime = req.body.dateTime;
   var numToken = Number(req.token);
   var query = {
@@ -253,33 +245,14 @@ app.put('/whiteshoes', verifyToken, function (req, res) {
     "token": numToken
   }
   MongoClient.connect(url, function(err, database){
-    var db = database.db("whiteshoeswednesday");
+    var db = database.db("feelings");
     console.log("Connected successfully to mongodb: PUT user log:" + username);
-    db.collection("users").update(query,{$set:{"log.$.whiteshoes":whiteshoes}}, function(err, user){
+    db.collection("users").update(query,{$set:{"log.$.feelings":feelings}}, function(err, user){
       res.send(true);
     });
     database.close();
     console.log("Database connection is closed: PUT user log: " + username)
   });
-});
-
-app.get('/photos', function(req,res) {
-  var params = {
-    Bucket: myBucket,
-    MaxKeys: 100
-  };
-  s3.listObjects(params, function(err, data) {
-    if(err) console.log(err, err.stack); // an error occured
-    else {
-      console.log(data); // successful response
-      // filenames only
-      var filenames = [];
-      for(let i = 0; i < data.Contents.length; ++i) {
-        filenames.push(data.Contents[i].Key);
-      }
-      res.send(filenames);
-    }
-  })
 });
 
 // update password
@@ -294,7 +267,7 @@ app.put('/user/:username/settings/change-password', verifyToken, function (req, 
     "token": numToken
   }
   MongoClient.connect(url, function(err, database){
-    var db = database.db("whiteshoeswednesday");
+    var db = database.db("feelings");
     console.log("Connected successfully to mongodb: update user password:" + username);
     // updates password of that query
     db.collection("users").update(query,{$set:{password:newPassword}}, function(err, user){

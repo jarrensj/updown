@@ -13,7 +13,6 @@ export class ProfileComponent implements OnInit {
   firstName:string;
   log:Log[]; // log of dates with recorded whiteshoes
   dates:any = []; // calendar (last 8 months)
-  showWednesdays:boolean = true;
 
   constructor(private dataService:DataService,  public authService: AuthService) { }
 
@@ -71,7 +70,7 @@ export class ProfileComponent implements OnInit {
       for (var j = days_in_month[last8months[i]]; j > 0; --j) {
         temp = {
           dateTime: new Date((last8months[i] + 1)+ '/' + j + '/' + theYears[i]),
-          whiteshoes: false
+          feelings: ""
         }
         temp_month.push(temp);
       }
@@ -93,7 +92,7 @@ export class ProfileComponent implements OnInit {
       if(this.sameDay(this.dates[j][k].dateTime, temp)){
         this.difference(temp, this.dates[j][k].dateTime);
         // update
-        this.dates[j][k].whiteshoes = this.log[i].whiteshoes;
+        this.dates[j][k].feelings = this.log[i].feelings;
         // move onto next day
         if(k < this.dates[j].length - 1) {
           ++k;
@@ -118,7 +117,7 @@ export class ProfileComponent implements OnInit {
         if(diff.m == 0 && diff.d > 0 && diff.y == 0) {
           k = k + diff.d; // jump to that day
           // update
-          this.dates[j][k].whiteshoes = this.log[i].whiteshoes;
+          this.dates[j][k].feelings = this.log[i].feelings;
         }
         // if different month but same year, jump to month and that day
         else if(diff.m > 0 && diff.y == 0) {
@@ -127,7 +126,7 @@ export class ProfileComponent implements OnInit {
             // jump to that day in that month
             k = this.dates[j].length - temp.getDate();
             // update
-            this.dates[j][k].whiteshoes = this.log[i].whiteshoes;
+            this.dates[j][k].feelings = this.log[i].feelings;
           }
           else {
             // done
@@ -162,10 +161,6 @@ export class ProfileComponent implements OnInit {
       y: y
     }
     return diff;
-  }
-
-  toggleCalendar(){
-    this.showWednesdays = !this.showWednesdays;
   }
 
 }

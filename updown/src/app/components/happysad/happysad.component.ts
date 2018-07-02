@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./happysad.component.css']
 })
 export class HappysadComponent implements OnInit {
-  whiteshoes:boolean;
+  feelings:string;
   username:string = "";
   token:string = "";
   already:boolean;
@@ -24,28 +24,24 @@ export class HappysadComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.authService.user;
-    this.checkIfWednesday();
     this.checkToday();
   }
 
   happy() {
-    this.whiteshoes = true;
+    this.feelings = "happy";
   }
 
   sad() {
-    this.whiteshoes = false;
+    this.feelings = "sad";
   }
 
   submit(){
-    // check if same day still before commit
-    // this.checkToday();
-
     let token = this.authService.token;
     if(this.already) {
       // update feeling of the day
       var body = {
         username: this.username,
-        whiteshoes: this.whiteshoes,
+        feelings: this.feelings,
         dateTime: this.date // dateTime to modify
       }
       this.dataService.update(body, token).subscribe((res) => {
@@ -58,7 +54,7 @@ export class HappysadComponent implements OnInit {
       var dateTime = new Date();
       var body = {
         username: this.username,
-        whiteshoes: this.whiteshoes,
+        feelings: this.feelings,
         dateTime: dateTime.toString()
       }
       this.dataService.save(body, token).subscribe((res) => {
@@ -75,19 +71,9 @@ export class HappysadComponent implements OnInit {
         this.already = false;
       } else {
         this.already = true;
-        this.whiteshoes = res.whiteshoes;
+        this.feelings = res.feelings;
         this.date = res.dateTime;
       }
     });
-  }
-
-  checkIfWednesday() {
-    var date = new Date();
-    if(date.getDay() == 3) {
-      return true;
-    }
-    else {
-      return false;
-    }
   }
 }

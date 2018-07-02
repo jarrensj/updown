@@ -1,7 +1,5 @@
-# whiteshoeswednesday
-keep track of your whiteshoeswednesday streak
-
-[whiteshoeswednesday.com](whiteshoeswednesday.com)
+# updown
+keep track of how you are feeling
 
 ## run
 run angular app
@@ -24,4 +22,4 @@ module.exports = {
 ```
 
 #### created by:
-[Jarren San Jose](jarrensj.com), [Chloe Ng](chloegng.com)
+[Jarren San Jose](jarrensj.com)

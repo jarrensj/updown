@@ -1,7 +1,7 @@
 {
-  "name": "whiteshoeswednesday",
+  "name": "updown",
   "version": "1.0.0",
-  "description": "whiteshoeswednesday",
+  "description": "updown",
   "main": "app.js",
   "directories": {
     "doc": "docs"
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jarrensj/wsw.git"
+    "url": "git+https://github.com/jarrensj/updown.git"
   },
   "author": "Jarren San Jose",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jarrensj/wsw/issues"
+    "url": "https://github.com/jarrensj/updown/issues"
   },
-  "homepage": "https://github.com/jarrensj/wsw#readme"
+  "homepage": "https://github.com/jarrensj/updown#readme"
 }

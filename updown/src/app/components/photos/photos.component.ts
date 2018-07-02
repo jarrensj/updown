@@ -13,9 +13,7 @@ export class PhotosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataService.getPhotos().subscribe((res) => {
-      this.filenames = res;
-    });
+
   }
 
 }

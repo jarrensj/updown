@@ -4,16 +4,16 @@
     <button routerLink="/logout">logout</button>
   </div>
   <app-logo></app-logo>
-  <h1>are you wearing white shoes?</h1>
+  <h1>how are you today?</h1>
   <h3 *ngIf = "already">you've already recorded today! (๑˃̵ᴗ˂̵)و</h3>
 
   <div class = "left">
     <img src = "assets/white-w.png" (click) = "happy()" alt="happy face"><br>
-    <span [ngClass] = "{'selected' : whiteshoes === true}">of course</span>
+    <span [ngClass] = "{'selected' : feelings == 'happy'}">happy</span>
   </div>
   <div class = "right">
     <img src = "assets/grey-w.png" (click) = "sad()" alt="sad face"><br>
-    <span [ngClass] = "{'selected' : whiteshoes === false}">i'm sorry!</span>
+    <span [ngClass] = "{'selected' : feelings == 'sad'}">sad</span>
   </div>
 
   <div class ="save">

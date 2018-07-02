@@ -6,9 +6,9 @@
     <button *ngIf = "isLoggedIn" routerLink="/logout">logout</button>
   </div>
   <app-logo></app-logo>
-  <h1>white shoes today?</h1>
+  <h1>check how your friends are doing today</h1>
   <h2>{{message}}</h2>
-  <h3>Search a username and see if they are wearing white shoes</h3>
+  <h3>Search a username and see how they are feeling today</h3>
 
   <form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" class = "form">
     <input
